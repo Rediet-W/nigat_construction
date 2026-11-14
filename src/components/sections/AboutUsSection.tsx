@@ -19,7 +19,7 @@ export function AboutUsSection() {
                 <div className="about-us-cta-box">
                   <div className="icon-box"><Image src="/images/icon-about-us-cta-box.svg" alt="" width={40} height={40} /></div>
                   <div className="about-us-cta-content">
-                    <h2><Counter value="25" />+</h2>
+                    <h2><Counter value="8" />+</h2>
                     <p>Years of Excellence in Construction and Building Solutions</p>
                   </div>
                 </div>

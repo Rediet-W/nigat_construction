@@ -7,7 +7,7 @@ import { CoreValueSection } from "@/components/sections/CoreValueSection";
 import { ExpertiseSection } from "@/components/sections/ExpertiseSection";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { IntroVideoSection } from "@/components/sections/IntroVideoSection";
-import { TeamSection } from "@/components/sections/TeamSection";
+// import { TeamSection } from "@/components/sections/TeamSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { ROUTES } from "@/constants/routes";
 
@@ -21,7 +21,7 @@ export default function AboutPage() {
       <ApproachSection />
       <CoreValueSection />
       <IntroVideoSection />
-      <TeamSection className="about-our-team" />
+      {/* <TeamSection className="about-our-team" /> */}
       <ExpertiseSection />
       <FaqSection />
       <TestimonialsSection />

@@ -2,7 +2,7 @@ import { AboutUsSection } from "@/components/sections/AboutUsSection";
 import { CtaSection } from "@/components/sections/CtaSection";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { IntroVideoSection } from "@/components/sections/IntroVideoSection";
-import { TeamSection } from "@/components/sections/TeamSection";
+// import { TeamSection } from "@/components/sections/TeamSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
 import { BlogSection } from "@/features/home/sections/BlogSection";
 import { HeroSection, type HeroVariant } from "@/features/home/sections/HeroSection";
@@ -19,7 +19,7 @@ export function HomePage({ heroVariant }: { heroVariant: HeroVariant }) {
       <ServicesSection />
       <WhyChooseUsSection />
       <ProjectsSection />
-      <TeamSection />
+      {/* <TeamSection /> */}
       <IntroVideoSection />
       <TestimonialsSection />
       <FaqSection />

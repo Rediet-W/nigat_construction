@@ -19,7 +19,7 @@ export function CoreValueSection() {
               />
               <div className="core-value-counter-list wow fadeInUp">
                 <div className="core-value-counter-item">
-                  <h2><Counter value="25" />+</h2>
+                  <h2><Counter value="8" />+</h2>
                   <p>Years of Construction Experience</p>
                 </div>
                 <div className="core-value-counter-item">

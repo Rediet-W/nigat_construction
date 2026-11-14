@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ROUTES } from "@/constants/routes";
+import { SITE } from "@/constants/site";
 
 export function ApproachSection() {
   return (
@@ -28,7 +29,7 @@ export function ApproachSection() {
                 <div className="icon-box"><Image src="/images/icon-approach-item-1.svg" alt="" width={50} height={50} /></div>
                 <div className="approach-item-content">
                   <h3>Our Mission</h3>
-                  <p>We begin by understanding your goals, budget, timeline, and project requirements. Our experts conduct site</p>
+                  <p>{SITE.mission}</p>
                 </div>
               </div>
               <div className="approach-item wow fadeInUp" data-wow-delay="0.2s">

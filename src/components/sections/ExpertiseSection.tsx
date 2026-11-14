@@ -48,7 +48,7 @@ export function ExpertiseSection({ className }: { className?: string }) {
                   </div>
                   <div className="expertise-info-counter-list">
                     <div className="expertise-counter-item">
-                      <h2><Counter value="30" />+</h2>
+                      <h2><Counter value="8" />+</h2>
                       <p>Years of Industry Experience</p>
                     </div>
                     <div className="expertise-counter-item">

@@ -7,9 +7,9 @@ export function ServicesGrid() {
     <div className="page-services">
       <div className="container">
         <div className="row">
-          {SERVICES.slice(0, 8).map((service, index) => (
+          {SERVICES.map((service, index) => (
             <div className="col-xl-3 col-md-6" key={service.id}>
-              <ServiceCard service={service} delay={wowDelay(index)} />
+              <ServiceCard service={service} delay={wowDelay(index % 8)} />
             </div>
           ))}
         </div>

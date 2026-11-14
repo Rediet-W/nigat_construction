@@ -16,11 +16,11 @@ export function ServiceDetails() {
               <div className="page-category-list wow fadeInUp">
                 <h2 className="page-category-list-title">Discover Our Services</h2>
                 <ul>
-                  <li><a href="#">Residential Construction</a></li>
-                  <li><a href="#">Commercial Construction</a></li>
-                  <li><a href="#">Industrial Construction</a></li>
-                  <li><a href="#">Infrastructure Construction</a></li>
-                  <li><a href="#">Building Renovation</a></li>
+                  <li><a href="#">Gypsum Board Ceiling &amp; Partition Works</a></li>
+                  <li><a href="#">Porcelain &amp; Ceramic Tile Works</a></li>
+                  <li><a href="#">Wall Cladding Systems</a></li>
+                  <li><a href="#">Custom Furnishing &amp; Joinery Works</a></li>
+                  <li><a href="#">Acoustic Renovation &amp; Soundproofing Works</a></li>
                 </ul>
               </div>
               <div className="sidebar-cta-box wow fadeInUp" data-wow-delay="0.25s">

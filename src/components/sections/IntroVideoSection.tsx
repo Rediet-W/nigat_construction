@@ -5,7 +5,7 @@ import { VideoPopup } from "@/components/ui/VideoPopup";
 import { BackgroundVideo } from "@/components/ui/BackgroundVideo";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ROUTES } from "@/constants/routes";
-import { PROMO_VIDEO_URL } from "@/constants/site";
+import { CONTACT_INFO, PROMO_VIDEO_URL } from "@/constants/site";
 
 export function IntroVideoSection() {
   return (
@@ -28,7 +28,7 @@ export function IntroVideoSection() {
                   <div className="icon-box"><Image src="/images/icon-phone-primary.svg" alt="" width={25} height={25} /></div>
                   <div className="intro-video-contact-item-content">
                     <p>Call us 24/7 on</p>
-                    <h3><a href="tel:+1213465789">+1(213) 465 789</a></h3>
+                    <h3><a href={CONTACT_INFO.phone.href}>{CONTACT_INFO.phone.label}</a></h3>
                   </div>
                 </div>
               </div>

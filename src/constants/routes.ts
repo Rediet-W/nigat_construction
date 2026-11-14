@@ -1,5 +1,5 @@
 /**
- * Every page of the original Builtex template mapped to an App Router path.
+ * Every page of the Nigat Fanawi Trading PLC website mapped to an App Router path.
  * (`index.html` and its duplicate `index-2.html` both map to `/`.)
  */
 export const ROUTES = {

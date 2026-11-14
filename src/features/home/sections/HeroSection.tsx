@@ -68,7 +68,7 @@ export function HeroSection({ variant = "image" }: { variant?: HeroVariant }) {
                   <div className="satisfy-client-image add-more"><i className="fa-solid fa-plus" /></div>
                 </div>
                 <div className="satisfy-client-content">
-                  <p>15+ Years of Trusted Construction Excellence</p>
+                  <p>8+ Years of Trusted Construction Excellence</p>
                 </div>
               </div>
               <div className="quality-construction-circle wow fadeInUp" data-wow-delay="0.2s"><Image src="/images/quality-construction-circle.svg" alt="" width={137} height={137} /></div>
