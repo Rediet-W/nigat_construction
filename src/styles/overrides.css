@@ -117,3 +117,25 @@ html.js .text-anime-style-3:not(.is-split) {
     transition: none;
   }
 }
+
+/* Brand logo: PNG mark + company name stacked on three lines (header + footer). */
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-logo .site-logo-mark {
+  width: auto;
+  height: 50px;
+}
+
+.site-logo-text {
+  display: flex;
+  flex-direction: column;
+  color: var(--white-color);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.15;
+  white-space: nowrap;
+}

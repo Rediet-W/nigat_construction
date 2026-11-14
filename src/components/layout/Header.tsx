@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { MobileMenu, MobileMenuProvider, MobileMenuToggle } from "@/components/layout/MobileNavigation";
 import { Navigation } from "@/components/layout/Navigation";
+import { SiteLogo } from "@/components/layout/SiteLogo";
 import { ROUTES } from "@/constants/routes";
 import { SITE } from "@/constants/site";
 
@@ -13,8 +13,8 @@ export function Header() {
         <div className="header-sticky">
           <nav className="navbar navbar-expand-lg">
             <div className="container">
-              <Link className="navbar-brand" href={ROUTES.home}>
-                <Image src={SITE.logo} alt="Logo" width={188} height={50} preload />
+              <Link className="navbar-brand" href={ROUTES.home} aria-label={SITE.name}>
+                <SiteLogo preload />
               </Link>
 
               <div className="collapse navbar-collapse main-menu">

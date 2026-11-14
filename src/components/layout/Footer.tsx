@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
+import { SiteLogo } from "@/components/layout/SiteLogo";
 import { FOOTER_QUICK_LINKS, FOOTER_SERVICE_LINKS, SOCIAL_LINKS } from "@/constants/navigation";
 import { CONTACT_INFO, SITE } from "@/constants/site";
 import type { NavItem } from "@/types";
@@ -29,7 +30,7 @@ export function Footer() {
           <div className="col-lg-12">
             <div className="footer-header">
               <div className="footer-logo">
-                <Image src={SITE.logo} alt="" width={188} height={50} />
+                <SiteLogo />
               </div>
               <div className="footer-social-links">
                 <ul>

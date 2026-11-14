@@ -9,7 +9,7 @@ export const SITE = {
   mission:
     "To deliver reliable, innovative, and sustainable trading, construction, and investment solutions by creating value for customers, partners, and stakeholders through operational excellence, integrity, and customer-centric services.",
   objectives: ["Trust and credibility", "Lead generation", "Competitive edge"],
-  logo: "/images/logo.svg",
+  logo: "/images/logo.png",
   copyright: "Copyright © 2026 Nigat Fanawi Trading PLC. All Rights Reserved.",
 } as const;
 
