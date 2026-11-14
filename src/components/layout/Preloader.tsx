@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+import { SITE } from "@/constants/site";
+
 const FADE_MS = 600;
 
 /** Full-screen loader shown on first page load; fades out once the window has loaded. */
@@ -37,7 +39,7 @@ export function Preloader() {
       <div className="loading-container">
         <div className="loading" />
         <div id="loading-icon">
-          <Image src="/images/loader.svg" alt="" width={50} height={50} preload />
+          <Image src={SITE.logo} alt="" width={66} height={41} preload />
         </div>
       </div>
     </div>

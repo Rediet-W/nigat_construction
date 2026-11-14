@@ -3,15 +3,15 @@ import { ROUTES } from "@/constants/routes";
 
 /** Main menu, identical in every page of the original template. */
 export const MAIN_NAVIGATION: readonly NavItem[] = [
-  {
-    label: "Home",
-    href: ROUTES.home,
-    children: [
-      { label: "Home - Main", href: ROUTES.home },
-      { label: "Home - Video", href: ROUTES.homeVideo },
-      { label: "Home - Slider", href: ROUTES.homeSlider },
-    ],
-  },
+  // {
+  //   label: "Home",
+  //   href: ROUTES.home,
+  //   children: [
+  //     { label: "Home - Main", href: ROUTES.home },
+  //     { label: "Home - Video", href: ROUTES.homeVideo },
+  //     { label: "Home - Slider", href: ROUTES.homeSlider },
+  //   ],
+  // },
   { label: "About Us", href: ROUTES.about },
   { label: "Services", href: ROUTES.services },
   { label: "Blog", href: ROUTES.blog },
