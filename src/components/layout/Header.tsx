@@ -5,8 +5,11 @@ import { Navigation } from "@/components/layout/Navigation";
 import { SiteLogo } from "@/components/layout/SiteLogo";
 import { ROUTES } from "@/constants/routes";
 import { SITE } from "@/constants/site";
+import { LanguageSwitcher } from "@/i18n/LanguageSwitcher";
+import { getDictionary } from "@/i18n/server";
 
-export function Header() {
+export async function Header() {
+  const t = await getDictionary();
   return (
     <header className="main-header">
       <MobileMenuProvider>
@@ -23,10 +26,12 @@ export function Header() {
                 </div>
                 <div className="header-btn">
                   <Link href={ROUTES.contact} className="btn-default btn-highlighted">
-                    Book Now
+                    {t.common.bookNow}
                   </Link>
                 </div>
               </div>
+
+              <LanguageSwitcher />
 
               <div className="navbar-toggle">
                 <MobileMenuToggle />

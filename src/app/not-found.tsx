@@ -1,15 +1,15 @@
-import type { Metadata } from "next";
-
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ROUTES } from "@/constants/routes";
 import { NotFoundSection } from "@/features/errors/sections/NotFoundSection";
+import { getDictionary, pageMetadata } from "@/i18n/server";
 
-export const metadata: Metadata = { title: "Page Not Found" };
+export const generateMetadata = pageMetadata("notFound");
 
-export default function NotFound() {
+export default async function NotFound() {
+  const t = await getDictionary();
   return (
     <>
-      <PageHeader title="Page Not Found" breadcrumbs={[{ label: "Home", href: ROUTES.home }, { label: "404 Error Page" }]} />
+      <PageHeader title={t.pages.notFound.title} breadcrumbs={[{ label: t.common.home, href: ROUTES.home }, { label: t.pages.notFound.crumb }]} />
       <NotFoundSection />
     </>
   );

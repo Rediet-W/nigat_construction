@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { getDictionary } from "@/i18n/server";
 import type { BreadcrumbItem } from "@/types";
 
 interface PageHeaderProps {
@@ -11,7 +12,8 @@ interface PageHeaderProps {
 }
 
 /** Inner-page banner with parallax background, animated title and breadcrumb. */
-export function PageHeader({ title, breadcrumbs, children }: PageHeaderProps) {
+export async function PageHeader({ title, breadcrumbs, children }: PageHeaderProps) {
+  const t = (await getDictionary()).common;
   return (
     <div className="page-header dark-section parallaxie">
       <div className="container">
@@ -22,7 +24,7 @@ export function PageHeader({ title, breadcrumbs, children }: PageHeaderProps) {
                 {title}
               </h1>
               {breadcrumbs && (
-                <nav className="wow fadeInUp" aria-label="Breadcrumb">
+                <nav className="wow fadeInUp" aria-label={t.breadcrumb}>
                   <ol className="breadcrumb">
                     {breadcrumbs.map((crumb) =>
                       crumb.href ? (

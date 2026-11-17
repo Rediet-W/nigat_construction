@@ -3,22 +3,24 @@ import Link from "next/link";
 
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ROUTES } from "@/constants/routes";
-import { SITE } from "@/constants/site";
+import { getDictionary } from "@/i18n/server";
 
-export function ApproachSection() {
+export async function ApproachSection() {
+  const dict = await getDictionary();
+  const t = dict.approach;
   return (
     <div className="our-approach light-section">
       <div className="container">
         <div className="row section-row align-items-center">
           <div className="col-xl-6">
             <SectionTitle
-              subtitle="Our Approach"
-              title="Building excellence through every step we take"
+              subtitle={t.subtitle}
+              title={t.title}
             />
           </div>
           <div className="col-xl-6">
             <div className="section-title-content wow fadeInUp" data-wow-delay="0.2s">
-              <p>We believe every successful construction project begins with careful planning, open communication, and expert execution.</p>
+              <p>{t.intro}</p>
             </div>
           </div>
         </div>
@@ -28,22 +30,22 @@ export function ApproachSection() {
               <div className="approach-item wow fadeInUp">
                 <div className="icon-box"><Image src="/images/icon-approach-item-1.svg" alt="" width={50} height={50} /></div>
                 <div className="approach-item-content">
-                  <h3>Our Mission</h3>
-                  <p>{SITE.mission}</p>
+                  <h3>{t.mission}</h3>
+                  <p>{t.missionText}</p>
                 </div>
               </div>
               <div className="approach-item wow fadeInUp" data-wow-delay="0.2s">
                 <div className="icon-box"><Image src="/images/icon-approach-item-2.svg" alt="" width={50} height={50} /></div>
                 <div className="approach-item-content">
-                  <h3>Our Vision</h3>
-                  <p>We begin by understanding your goals, budget, timeline, and project requirements. Our experts conduct site</p>
+                  <h3>{t.vision}</h3>
+                  <p>{t.visionText}</p>
                 </div>
               </div>
               <div className="approach-item wow fadeInUp" data-wow-delay="0.4s">
                 <div className="icon-box"><Image src="/images/icon-approach-item-3.svg" alt="" width={50} height={50} /></div>
                 <div className="approach-item-content">
-                  <h3>Our Story</h3>
-                  <p>We begin by understanding your goals, budget, timeline, and project requirements. Our experts conduct site</p>
+                  <h3>{t.story}</h3>
+                  <p>{t.storyText}</p>
                 </div>
               </div>
             </div>
@@ -64,10 +66,10 @@ export function ApproachSection() {
                   </div>
                 </div>
                 <div className="satisfy-client-content">
-                  <p>Have a construction project in mind? Our experienced team is here to answer your questions,</p>
+                  <p>{t.cta}</p>
                 </div>
               </div>
-              <div className="approach-cta-btn wow fadeInUp" data-wow-delay="0.2s"><Link href={ROUTES.contact} className="btn-default">Get in Touch</Link></div>
+              <div className="approach-cta-btn wow fadeInUp" data-wow-delay="0.2s"><Link href={ROUTES.contact} className="btn-default">{dict.common.getInTouch}</Link></div>
             </div>
           </div>
         </div>

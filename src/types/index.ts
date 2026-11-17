@@ -1,5 +1,9 @@
 /** Shared domain types for the site's content collections. */
 
+import type { Dictionary } from "@/i18n/dictionaries/en";
+
+export type NavLabelKey = keyof Dictionary["nav"];
+
 export interface Service {
   id: string;
   title: string;
@@ -50,7 +54,8 @@ export interface FaqItem {
 }
 
 export interface NavItem {
-  label: string;
+  /** Key into the `nav` section of the i18n dictionaries (src/i18n/dictionaries). */
+  labelKey: NavLabelKey;
   href: string;
   children?: readonly NavItem[];
 }

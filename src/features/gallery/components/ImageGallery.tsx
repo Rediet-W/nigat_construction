@@ -5,10 +5,12 @@ import { useCallback, useState } from "react";
 
 import { Lightbox } from "@/components/ui/Lightbox";
 import { GALLERY_IMAGES } from "@/constants/gallery";
+import { useI18n } from "@/i18n/I18nProvider";
 import { wowDelay } from "@/lib/animation";
 
 /** Photo grid with a Magnific-style gallery lightbox (prev/next, counter, keyboard). */
 export function ImageGallery() {
+  const { dict } = useI18n();
   const [active, setActive] = useState<number | null>(null);
   const count = GALLERY_IMAGES.length;
 
@@ -24,7 +26,7 @@ export function ImageGallery() {
             <div className="photo-gallery wow fadeInUp" data-wow-delay={wowDelay(index)}>
               <a
                 href={image.src}
-                data-cursor-text="View"
+                data-cursor-text={dict.common.view}
                 onClick={(event) => {
                   event.preventDefault();
                   setActive(index);

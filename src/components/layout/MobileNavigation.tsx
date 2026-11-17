@@ -5,6 +5,7 @@ import { createContext, useContext, useState, type KeyboardEvent, type ReactNode
 
 import { MAIN_NAVIGATION } from "@/constants/navigation";
 import { useCollapse } from "@/hooks/useCollapse";
+import { useI18n } from "@/i18n/I18nProvider";
 import type { NavItem } from "@/types";
 
 /*
@@ -52,12 +53,13 @@ function onActivateKey(action: () => void) {
 
 export function MobileMenuToggle() {
   const { open, toggle } = useMobileMenu();
+  const { dict } = useI18n();
   return (
     <a
       href="#"
       aria-haspopup="true"
       aria-expanded={open}
-      aria-label="Toggle menu"
+      aria-label={dict.common.toggleMenu}
       role="button"
       tabIndex={0}
       className={`slicknav_btn ${open ? "slicknav_open" : "slicknav_collapsed"}`}
@@ -96,6 +98,7 @@ function SlideList({ open, className, children }: { open: boolean; className?: s
 
 function ParentItem({ item, onNavigate }: { item: NavItem; onNavigate: () => void }) {
   const [open, setOpen] = useState(false);
+  const { dict } = useI18n();
   const toggle = () => setOpen((o) => !o);
   return (
     <li className={`nav-item submenu slicknav_parent ${open ? "slicknav_open" : "slicknav_collapsed"}`}>
@@ -111,14 +114,14 @@ function ParentItem({ item, onNavigate }: { item: NavItem; onNavigate: () => voi
           toggle();
         }}
       >
-        <span className="nav-link slicknav_parent-label">{item.label}</span>
+        <span className="nav-link slicknav_parent-label">{dict.nav[item.labelKey]}</span>
         <span className="slicknav_arrow">{open ? "▼" : "►"}</span>
       </a>
       <SlideList open={open}>
         {item.children?.map((child) => (
-          <li key={child.label} className="nav-item">
+          <li key={child.labelKey} className="nav-item">
             <Link className="nav-link" href={child.href} role="menuitem" onClick={onNavigate}>
-              {child.label}
+              {dict.nav[child.labelKey]}
             </Link>
           </li>
         ))}
@@ -129,16 +132,17 @@ function ParentItem({ item, onNavigate }: { item: NavItem; onNavigate: () => voi
 
 export function MobileMenu() {
   const { open, close } = useMobileMenu();
+  const { dict } = useI18n();
   return (
     <div className="slicknav_menu">
       <SlideList open={open} className="slicknav_nav">
         {MAIN_NAVIGATION.map((item) =>
           item.children ? (
-            <ParentItem key={item.label} item={item} onNavigate={close} />
+            <ParentItem key={item.labelKey} item={item} onNavigate={close} />
           ) : (
-            <li key={item.label} className="nav-item">
+            <li key={item.labelKey} className="nav-item">
               <Link className="nav-link" href={item.href} role="menuitem" onClick={close}>
-                {item.label}
+                {dict.nav[item.labelKey]}
               </Link>
             </li>
           ),

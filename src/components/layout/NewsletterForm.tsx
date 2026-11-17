@@ -4,15 +4,15 @@ import Image from "next/image";
 import { useState, useTransition, type FormEvent } from "react";
 
 import { subscribeNewsletter } from "@/features/contact/actions";
-
-const DEFAULT_NOTE = "*Subscribe to get the latest updates,  tips, and project insights.";
+import { useI18n } from "@/i18n/I18nProvider";
 
 /**
  * Footer newsletter signup. Uses native `required`/`type=email` validation as the
  * original did; the result is reported in place of the helper note below the field.
  */
 export function NewsletterForm() {
-  const [note, setNote] = useState(DEFAULT_NOTE);
+  const t = useI18n().dict.footer;
+  const [note, setNote] = useState(t.newsletterNote);
   const [pending, startTransition] = useTransition();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -28,7 +28,7 @@ export function NewsletterForm() {
 
   return (
     <div className="footer-links footer-newsletter-box">
-      <h2>Newsletter</h2>
+      <h2>{t.newsletter}</h2>
       <form id="newslettersForm" onSubmit={handleSubmit}>
         <div className="form-group">
           <input
@@ -36,11 +36,11 @@ export function NewsletterForm() {
             name="mail"
             className="form-control"
             id="mail"
-            placeholder="Enter Email Address*"
-            aria-label="Email address"
+            placeholder={t.emailPlaceholder}
+            aria-label={t.emailLabel}
             required
           />
-          <button type="submit" className="newsletter-btn" aria-label="Subscribe" disabled={pending}>
+          <button type="submit" className="newsletter-btn" aria-label={t.subscribe} disabled={pending}>
             <Image src="/images/arrow-primary.svg" alt="" width={20} height={20} />
           </button>
         </div>

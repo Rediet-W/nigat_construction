@@ -3,11 +3,13 @@ import Link from "next/link";
 
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
 import { SiteLogo } from "@/components/layout/SiteLogo";
-import { FOOTER_QUICK_LINKS, FOOTER_SERVICE_LINKS, SOCIAL_LINKS } from "@/constants/navigation";
-import { CONTACT_INFO, SITE } from "@/constants/site";
-import type { NavItem } from "@/types";
+import { FOOTER_QUICK_LINKS, FOOTER_SERVICE_IDS, SOCIAL_LINKS } from "@/constants/navigation";
+import { SERVICES } from "@/constants/services";
+import { CONTACT_INFO } from "@/constants/site";
+import { localize } from "@/i18n/localize";
+import { getDictionary } from "@/i18n/server";
 
-function FooterLinks({ title, links }: { title: string; links: readonly NavItem[] }) {
+function FooterLinks({ title, links }: { title: string; links: readonly { label: string; href: string }[] }) {
   return (
     <div className="footer-links">
       <h2>{title}</h2>
@@ -22,7 +24,13 @@ function FooterLinks({ title, links }: { title: string; links: readonly NavItem[
   );
 }
 
-export function Footer() {
+export async function Footer() {
+  const t = await getDictionary();
+  const quickLinks = FOOTER_QUICK_LINKS.map((link) => ({ label: t.nav[link.labelKey], href: link.href }));
+  const serviceLinks = localize(SERVICES, t.content.services)
+    .filter((service) => FOOTER_SERVICE_IDS.includes(service.id))
+    .map((service) => ({ label: service.title, href: service.href }));
+
   return (
     <footer className="main-footer dark-section">
       <div className="container">
@@ -60,13 +68,13 @@ export function Footer() {
                   </li>
                   <li>
                     <Image src="/images/icon-location-white.svg" alt="" width={24} height={24} />
-                    {CONTACT_INFO.address}
+                    {t.common.address}
                   </li>
                 </ul>
               </div>
 
-              <FooterLinks title="Quick Links" links={FOOTER_QUICK_LINKS} />
-              <FooterLinks title="Our Services" links={FOOTER_SERVICE_LINKS} />
+              <FooterLinks title={t.footer.quickLinks} links={quickLinks} />
+              <FooterLinks title={t.footer.ourServices} links={serviceLinks} />
               <NewsletterForm />
             </div>
           </div>
@@ -78,7 +86,7 @@ export function Footer() {
           <div className="row">
             <div className="col-lg-12">
               <div className="footer-copyright-text">
-                <p>{SITE.copyright}</p>
+                <p>{t.common.copyright}</p>
               </div>
             </div>
           </div>

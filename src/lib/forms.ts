@@ -21,13 +21,14 @@ export function field(data: FormData, name: string): string {
  * `form-process.php` script that is not part of the project, so delivery is
  * opt-in via configuration and reported honestly when missing.
  */
-export async function deliver(form: string, payload: Record<string, string>): Promise<FormResult> {
+export async function deliver(
+  form: string,
+  payload: Record<string, string>,
+  messages: { notConfigured: string; failed: string },
+): Promise<FormResult> {
   const endpoint = process.env.FORM_WEBHOOK_URL;
   if (!endpoint) {
-    return {
-      ok: false,
-      message: "Form delivery is not configured yet. Please contact us by phone or email.",
-    };
+    return { ok: false, message: messages.notConfigured };
   }
 
   try {
@@ -40,6 +41,6 @@ export async function deliver(form: string, payload: Record<string, string>): Pr
     return { ok: true, message: "" };
   } catch (error) {
     console.error(`[forms] ${form} delivery failed`, error);
-    return { ok: false, message: "Something went wrong. Please try again later." };
+    return { ok: false, message: messages.failed };
   }
 }

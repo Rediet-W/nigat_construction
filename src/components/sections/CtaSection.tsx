@@ -2,9 +2,11 @@ import Image from "next/image";
 
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ContactForm, FormField, FormSubmit } from "@/features/contact/components/ContactForm";
+import { getDictionary } from "@/i18n/server";
 
 /** `className` adds the page-specific modifier class the template uses on some pages. */
-export function CtaSection({ className }: { className?: string }) {
+export async function CtaSection({ className }: { className?: string }) {
+  const { cta: t, form: f } = await getDictionary();
   return (
     <div className={className ? `cta-section ${className}` : "cta-section"}>
       <div className="container">
@@ -14,17 +16,17 @@ export function CtaSection({ className }: { className?: string }) {
               <div className="cta-box-header">
                 <div className="cta-box-header-form">
                   <SectionTitle
-                    subtitle="Get a Free Estimate"
-                    title="Request your construction quote today"
+                    subtitle={t.subtitle}
+                    title={t.title}
                   />
                   <div className="cta-box-form">
                     <ContactForm className="wow fadeInUp" data-wow-delay="0.2s">
-                      <FormField className="form-group" name="fname" id="fname" placeholder="First Name" required />
-                      <FormField className="form-group" name="lname" id="lname" placeholder="Last Name" required />
-                      <FormField className="form-group" type="email" name="email" id="email" placeholder="E-mail Address" required />
-                      <FormField className="form-group" name="phone" id="phone" placeholder="Phone No." required />
-                      <FormField className="form-group" as="textarea" name="message" id="message" placeholder="Write Message Here......." rows={1} />
-                      <FormSubmit className="form-group" label="Submit Request" />
+                      <FormField className="form-group" name="fname" id="fname" placeholder={f.firstName} required />
+                      <FormField className="form-group" name="lname" id="lname" placeholder={f.lastName} required />
+                      <FormField className="form-group" type="email" name="email" id="email" placeholder={f.email} required />
+                      <FormField className="form-group" name="phone" id="phone" placeholder={f.phone} required />
+                      <FormField className="form-group" as="textarea" name="message" id="message" placeholder={f.message} rows={1} />
+                      <FormSubmit className="form-group" label={f.submitRequest} />
                     </ContactForm>
                   </div>
                 </div>
@@ -35,31 +37,31 @@ export function CtaSection({ className }: { className?: string }) {
               <div className="cta-box-body">
                 <div className="cta-box-body-content">
                   <SectionTitle
-                    subtitle="People trust"
-                    title="Driven by Quality and Reliability"
-                    description="We deliver reliable construction solution skilled professionals and to excellence."
+                    subtitle={t.trustSubtitle}
+                    title={t.trustTitle}
+                    description={t.trustDescription}
                   />
                 </div>
                 <div className="cta-box-item-list">
                   <div className="cta-box-item wow fadeInUp">
                     <div className="icon-box"><Image src="/images/icon-cta-box-item-1.svg" alt="" width={60} height={60} /></div>
                     <div className="cta-box-item-content">
-                      <h3>Premium Workmanship</h3>
-                      <p>Quality craftsmanship that ensures durable, lasting structures built to stand the test of time</p>
+                      <h3>{t.workmanship}</h3>
+                      <p>{t.itemText}</p>
                     </div>
                   </div>
                   <div className="cta-box-item wow fadeInUp" data-wow-delay="0.2s">
                     <div className="icon-box"><Image src="/images/icon-cta-box-item-2.svg" alt="" width={60} height={60} /></div>
                     <div className="cta-box-item-content">
-                      <h3>Transparent Pricing</h3>
-                      <p>Quality craftsmanship that ensures durable, lasting structures built to stand the test of time</p>
+                      <h3>{t.pricing}</h3>
+                      <p>{t.itemText}</p>
                     </div>
                   </div>
                   <div className="cta-box-item wow fadeInUp" data-wow-delay="0.4s">
                     <div className="icon-box"><Image src="/images/icon-cta-box-item-3.svg" alt="" width={60} height={60} /></div>
                     <div className="cta-box-item-content">
-                      <h3>Customer Satisfaction</h3>
-                      <p>Quality craftsmanship that ensures durable, lasting structures built to stand the test of time</p>
+                      <h3>{t.satisfaction}</h3>
+                      <p>{t.itemText}</p>
                     </div>
                   </div>
                 </div>

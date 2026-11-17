@@ -3,6 +3,7 @@
 import { useCallback, useState, type ReactNode } from "react";
 
 import { Lightbox, LightboxCloseButton } from "@/components/ui/Lightbox";
+import { useI18n } from "@/i18n/I18nProvider";
 
 interface VideoPopupProps {
   href: string;
@@ -22,6 +23,7 @@ function toEmbedUrl(url: string): string {
 
 /** Link that opens a video in an iframe lightbox (the template's `.popup-video`). */
 export function VideoPopup({ href, className, children, ...rest }: VideoPopupProps) {
+  const { dict } = useI18n();
   const [open, setOpen] = useState(false);
   const close = useCallback(() => setOpen(false), []);
 
@@ -45,7 +47,7 @@ export function VideoPopup({ href, className, children, ...rest }: VideoPopupPro
             <iframe
               className="mfp-iframe"
               src={toEmbedUrl(href)}
-              title="Video player"
+              title={dict.common.videoPlayer}
               allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
             />

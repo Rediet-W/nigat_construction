@@ -6,7 +6,7 @@
 
 /* Inter is self-hosted through next/font (see app/layout.tsx). */
 :root {
-  --default-font: var(--font-inter), "Inter", sans-serif;
+  --default-font: var(--font-inter), "Inter", var(--font-ethiopic), sans-serif;
 }
 
 /*
@@ -138,4 +138,49 @@ html.js .text-anime-style-3:not(.is-split) {
   font-weight: 700;
   line-height: 1.15;
   white-space: nowrap;
+}
+
+/* EN / አማ language toggle in the header (visible on desktop and mobile). */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 20px;
+  padding: 3px;
+  border: 1px solid var(--dark-divider-color);
+  border-radius: 100px;
+}
+
+.lang-switcher button {
+  border: 0;
+  border-radius: 100px;
+  background: transparent;
+  color: var(--white-color);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.lang-switcher button:hover {
+  color: var(--accent-color);
+}
+
+.lang-switcher button.active {
+  background: var(--accent-color);
+  color: var(--white-color);
+}
+
+@media only screen and (max-width: 991px) {
+  .lang-switcher {
+    margin-left: auto;
+    margin-right: 15px;
+  }
+
+  .lang-switcher button {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
 }

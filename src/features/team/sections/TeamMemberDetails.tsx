@@ -3,8 +3,14 @@ import Image from "next/image";
 import { Counter } from "@/components/ui/Counter";
 import { SkillBar } from "@/components/ui/SkillBar";
 import { ContactForm, FormField, FormSubmit } from "@/features/contact/components/ContactForm";
+import { getDictionary } from "@/i18n/server";
 
-export function TeamMemberDetails() {
+const SKILL_PERCENTS = [95, 92, 96] as const;
+
+export async function TeamMemberDetails() {
+  const dict = await getDictionary();
+  const t = dict.teamMember;
+  const f = dict.form;
   return (
     <div className="page-team-single">
       <div className="container">
@@ -17,20 +23,20 @@ export function TeamMemberDetails() {
                 </div>
                 <div className="team-about-content">
                   <div className="section-title">
-                    <h2 className="text-anime-style-3" data-cursor="-opaque">About me</h2>
-                    <p className="wow fadeInUp">Michael Anderson is the Founder &amp; Director of the company, bringing over 20 years of experience in the construction industry. His passion for quality craftsmanship, innovative building solutions, and client-focused service has shaped the company&apos;s reputation for excellence.</p>
+                    <h2 className="text-anime-style-3" data-cursor="-opaque">{t.aboutMe}</h2>
+                    <p className="wow fadeInUp">{t.bio}</p>
                   </div>
                   <div className="team-about-contact-list wow fadeInUp" data-wow-delay="0.2s">
                     <ul>
-                      <li><span>Phone Number:</span> +1 (800) 555-2486</li>
-                      <li><span>Email Address:</span>info@domainname.com</li>
-                      <li><span>Location:</span> New York, USA</li>
-                      <li><span>Experience:</span> 20+ Years</li>
-                      <li><span>Specialization:</span> Construction Management</li>
+                      <li><span>{t.phone}</span> +1 (800) 555-2486</li>
+                      <li><span>{t.email}</span>info@domainname.com</li>
+                      <li><span>{t.location}</span> {t.locationValue}</li>
+                      <li><span>{t.experience}</span> {t.experienceValue}</li>
+                      <li><span>{t.specialization}</span> {t.specializationValue}</li>
                     </ul>
                   </div>
                   <div className="team-member-social-list wow fadeInUp" data-wow-delay="0.4s">
-                    <h2>Follow On Social:</h2>
+                    <h2>{t.follow}</h2>
                     <ul>
                       <li><a href="#"><i className="fa-brands fa-pinterest-p" /></a></li>
                       <li><a href="#"><i className="fa-brands fa-x-twitter" /></a></li>
@@ -43,15 +49,14 @@ export function TeamMemberDetails() {
               <div className="member-experience-info">
                 <div className="member-experience-content">
                   <div className="section-title">
-                    <h2 className="text-anime-style-3" data-cursor="-opaque">Work experience</h2>
-                    <p className="wow fadeInUp">Throughout his career, Michael has successfully led residential, commercial, and industrial construction projects, ensuring every development is completed with precision, safety, and efficiency.</p>
+                    <h2 className="text-anime-style-3" data-cursor="-opaque">{t.workTitle}</h2>
+                    <p className="wow fadeInUp">{t.workText}</p>
                   </div>
                   <div className="member-experience-list wow fadeInUp" data-wow-delay="0.2s">
                     <ul>
-                      <li>Residential &amp; Commercial Development Across Diverse Markets</li>
-                      <li>Strategic Planning &amp; Execution for Complex Projects</li>
-                      <li>Budget &amp; Resource Management for Optimal Efficiency</li>
-                      <li>Client Relationship Management With Clear Communication</li>
+                      {t.workList.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
                     </ul>
                   </div>
                 </div>
@@ -67,46 +72,42 @@ export function TeamMemberDetails() {
               <div className="team-member-skill-box">
                 <div className="contact-us-form">
                   <div className="contact-us-form-title wow fadeInUp">
-                    <h2>Get in touch</h2>
+                    <h2>{dict.contact.getInTouch}</h2>
                   </div>
                   <div className="contact-form">
                     <ContactForm className="wow fadeInUp" data-wow-delay="0.2s">
                       <div className="row">
-                        <FormField className="form-group col-md-6" name="fname" id="fname" placeholder="First Name" required />
-                        <FormField className="form-group col-md-6" name="lname" id="lname" placeholder="Last Name" required />
-                        <FormField className="form-group col-md-6" type="email" name="email" id="email" placeholder="E-mail Address" required />
-                        <FormField className="form-group col-md-6" name="phone" id="phone" placeholder="Phone no." required />
-                        <FormField className="form-group col-md-12" as="textarea" name="message" id="message" placeholder="Write Message Here......." rows={4} />
-                        <FormSubmit className="form-btn col-md-12" label="Send Message" />
+                        <FormField className="form-group col-md-6" name="fname" id="fname" placeholder={f.firstName} required />
+                        <FormField className="form-group col-md-6" name="lname" id="lname" placeholder={f.lastName} required />
+                        <FormField className="form-group col-md-6" type="email" name="email" id="email" placeholder={f.email} required />
+                        <FormField className="form-group col-md-6" name="phone" id="phone" placeholder={f.phone} required />
+                        <FormField className="form-group col-md-12" as="textarea" name="message" id="message" placeholder={f.message} rows={4} />
+                        <FormSubmit className="form-btn col-md-12" label={f.sendMessage} />
                       </div>
                     </ContactForm>
                   </div>
                 </div>
                 <div className="team-member-skill-content">
                   <div className="section-title">
-                    <h2 className="text-anime-style-3" data-cursor="-opaque">Working skills</h2>
-                    <p>A strong combination of leadership, technical expertise, and strategic thinking supports every project from planning to completion.</p>
+                    <h2 className="text-anime-style-3" data-cursor="-opaque">{t.skillsTitle}</h2>
+                    <p>{t.skillsText}</p>
                   </div>
                   <div className="member-skill-counter-list wow fadeInUp">
                     <div className="member-skill-counter-item">
                       <h2><Counter value="500" />+</h2>
-                      <p>Completed Projects</p>
+                      <p>{t.completed}</p>
                     </div>
                     <div className="member-skill-counter-item">
                       <h2><Counter value="350" />+</h2>
-                      <p>Satisfied Clients</p>
+                      <p>{t.satisfied}</p>
                     </div>
                   </div>
                   <div className="member-skill-list">
-                    <div className="skills-progress-bar">
-                      <SkillBar title="Construction Management" percent={95} />
-                    </div>
-                    <div className="skills-progress-bar">
-                      <SkillBar title="Client Communication" percent={92} />
-                    </div>
-                    <div className="skills-progress-bar">
-                      <SkillBar title="Strategic Decision Making" percent={96} />
-                    </div>
+                    {t.skills.map((skill, index) => (
+                      <div className="skills-progress-bar" key={skill}>
+                        <SkillBar title={skill} percent={SKILL_PERCENTS[index]} />
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

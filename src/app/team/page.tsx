@@ -1,15 +1,15 @@
-import type { Metadata } from "next";
-
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ROUTES } from "@/constants/routes";
 import { TeamGrid } from "@/features/team/sections/TeamGrid";
+import { getDictionary, pageMetadata } from "@/i18n/server";
 
-export const metadata: Metadata = { title: "Our Team" };
+export const generateMetadata = pageMetadata("team");
 
-export default function TeamPage() {
+export default async function TeamPage() {
+  const t = await getDictionary();
   return (
     <>
-      <PageHeader title="Our team" breadcrumbs={[{ label: "Home", href: ROUTES.home }, { label: "Team" }]} />
+      <PageHeader title={t.pages.team.title} breadcrumbs={[{ label: t.common.home, href: ROUTES.home }, { label: t.pages.team.crumb }]} />
       <TeamGrid />
     </>
   );

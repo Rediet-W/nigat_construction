@@ -3,6 +3,7 @@
 import { useEffect, useRef, type MouseEvent, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
+import { useI18n } from "@/i18n/I18nProvider";
 import { getLenis } from "@/lib/smooth-scroll";
 
 interface LightboxProps {
@@ -27,6 +28,7 @@ interface LightboxProps {
  * click and the close button; locks page scroll while open.
  */
 export function Lightbox({ onClose, holderClass, wrapClass = "", closeBtnInside = true, onPrev, onNext, children }: LightboxProps) {
+  const { dict } = useI18n();
   const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -78,7 +80,7 @@ export function Lightbox({ onClose, holderClass, wrapClass = "", closeBtnInside 
           {!closeBtnInside && <LightboxCloseButton />}
           {onPrev && (
             <button
-              title="Previous (Left arrow key)"
+              title={dict.common.previous}
               type="button"
               className="mfp-arrow mfp-arrow-left mfp-prevent-close"
               onClick={onPrev}
@@ -86,7 +88,7 @@ export function Lightbox({ onClose, holderClass, wrapClass = "", closeBtnInside 
           )}
           {onNext && (
             <button
-              title="Next (Right arrow key)"
+              title={dict.common.next}
               type="button"
               className="mfp-arrow mfp-arrow-right mfp-prevent-close"
               onClick={onNext}
@@ -100,8 +102,9 @@ export function Lightbox({ onClose, holderClass, wrapClass = "", closeBtnInside 
 }
 
 export function LightboxCloseButton() {
+  const { dict } = useI18n();
   return (
-    <button title="Close (Esc)" type="button" className="mfp-close">
+    <button title={dict.common.close} type="button" className="mfp-close">
       ×
     </button>
   );

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import { useI18n } from "@/i18n/I18nProvider";
 import { getLenis } from "@/lib/smooth-scroll";
 
 /** Show the button once the visitor has scrolled past roughly one screen. */
@@ -12,6 +13,7 @@ const SHOW_AFTER = 400;
  * behaves the way visitors already expect from other sites (Jakob's Law).
  */
 export function BackToTop() {
+  const { dict } = useI18n();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -36,8 +38,8 @@ export function BackToTop() {
       type="button"
       className={`back-to-top${visible ? " is-visible" : ""}`}
       onClick={scrollToTop}
-      aria-label="Back to top"
-      title="Back to top"
+      aria-label={dict.common.backToTop}
+      title={dict.common.backToTop}
       tabIndex={visible ? 0 : -1}
       aria-hidden={!visible}
     >

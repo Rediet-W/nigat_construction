@@ -1,13 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { getDictionary } from "@/i18n/server";
 import type { AnimatedItemProps, Post } from "@/types";
 
-export function PostCard({ post, delay }: AnimatedItemProps & { post: Post }) {
+export async function PostCard({ post, delay }: AnimatedItemProps & { post: Post }) {
+  const t = (await getDictionary()).common;
   return (
     <div className="post-item wow fadeInUp" data-wow-delay={delay}>
       <div className="post-featured-image">
-        <Link href={post.href} data-cursor-text="View">
+        <Link href={post.href} data-cursor-text={t.view}>
           <figure className="image-anime">
             <Image src={post.image} alt="" width={1366} height={768} />
           </figure>
@@ -21,7 +23,7 @@ export function PostCard({ post, delay }: AnimatedItemProps & { post: Post }) {
         </div>
         <div className="post-item-btn">
           <Link href={post.href} className="readmore-btn">
-            Read More
+            {t.readMore}
           </Link>
         </div>
       </div>

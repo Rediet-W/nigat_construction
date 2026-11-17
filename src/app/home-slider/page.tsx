@@ -1,8 +1,7 @@
-import type { Metadata } from "next";
-
 import { HomePage } from "@/features/home/HomePage";
+import { pageMetadata } from "@/i18n/server";
 
-export const metadata: Metadata = { title: "Home - Slider" };
+export const generateMetadata = pageMetadata("homeSlider");
 
 export default function HomeSliderPage() {
   return <HomePage heroVariant="slider" />;

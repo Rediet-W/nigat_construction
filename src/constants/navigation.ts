@@ -12,9 +12,9 @@ export const MAIN_NAVIGATION: readonly NavItem[] = [
   //     { label: "Home - Slider", href: ROUTES.homeSlider },
   //   ],
   // },
-  { label: "About Us", href: ROUTES.about },
-  { label: "Services", href: ROUTES.services },
-  { label: "Blog", href: ROUTES.blog },
+  { labelKey: "about", href: ROUTES.about },
+  { labelKey: "services", href: ROUTES.services },
+  { labelKey: "blog", href: ROUTES.blog },
   // {
   //   label: "Pages",
   //   href: "#",
@@ -32,29 +32,24 @@ export const MAIN_NAVIGATION: readonly NavItem[] = [
   //     { label: "404", href: ROUTES.notFound },
   //   ],
   // },
-  { label: "Contact Us", href: ROUTES.contact },
+  { labelKey: "contact", href: ROUTES.contact },
 ];
 
 export const FOOTER_QUICK_LINKS: readonly NavItem[] = [
-  { label: "Home", href: ROUTES.home },
-  { label: "About Us", href: ROUTES.about },
-  { label: "Our Services", href: ROUTES.services },
-  { label: "Our Projects", href: ROUTES.projects },
-  { label: "Contact Us", href: ROUTES.contact },
+  { labelKey: "home", href: ROUTES.home },
+  { labelKey: "about", href: ROUTES.about },
+  { labelKey: "ourServices", href: ROUTES.services },
+  { labelKey: "projects", href: ROUTES.projects },
+  { labelKey: "contact", href: ROUTES.contact },
 ];
 
-export const FOOTER_SERVICE_LINKS: readonly NavItem[] = [
-  {
-    label: "Gypsum Board Ceiling & Partition Works",
-    href: ROUTES.serviceDetails,
-  },
-  { label: "Porcelain & Ceramic Tile Works", href: ROUTES.serviceDetails },
-  { label: "Wall Cladding Systems", href: ROUTES.serviceDetails },
-  { label: "Custom Furnishing & Joinery Works", href: ROUTES.serviceDetails },
-  {
-    label: "Acoustic Renovation & Soundproofing Works",
-    href: ROUTES.serviceDetails,
-  },
+/** Services listed in the footer, by `id` from src/constants/services.ts (titles are translated there). */
+export const FOOTER_SERVICE_IDS: readonly string[] = [
+  "gypsum-board-ceiling-partition-works",
+  "porcelain-ceramic-tile-works",
+  "wall-cladding-systems",
+  "custom-furnishing-joinery-works",
+  "acoustic-renovation-soundproofing-works",
 ];
 
 /** Official company social media profiles. */

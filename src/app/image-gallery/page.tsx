@@ -1,15 +1,15 @@
-import type { Metadata } from "next";
-
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ROUTES } from "@/constants/routes";
 import { ImageGallerySection } from "@/features/gallery/sections/ImageGallerySection";
+import { getDictionary, pageMetadata } from "@/i18n/server";
 
-export const metadata: Metadata = { title: "Image Gallery" };
+export const generateMetadata = pageMetadata("imageGallery");
 
-export default function ImageGalleryPage() {
+export default async function ImageGalleryPage() {
+  const t = await getDictionary();
   return (
     <>
-      <PageHeader title="Image gallery" breadcrumbs={[{ label: "Home", href: ROUTES.home }, { label: "Image gallery" }]} />
+      <PageHeader title={t.pages.imageGallery.title} breadcrumbs={[{ label: t.common.home, href: ROUTES.home }, { label: t.pages.imageGallery.crumb }]} />
       <ImageGallerySection />
     </>
   );

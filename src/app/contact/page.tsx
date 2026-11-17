@@ -1,16 +1,16 @@
-import type { Metadata } from "next";
-
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ROUTES } from "@/constants/routes";
 import { ContactSection } from "@/features/contact/sections/ContactSection";
 import { MapSection } from "@/features/contact/sections/MapSection";
+import { getDictionary, pageMetadata } from "@/i18n/server";
 
-export const metadata: Metadata = { title: "Contact Us" };
+export const generateMetadata = pageMetadata("contact");
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const t = await getDictionary();
   return (
     <>
-      <PageHeader title="Contact us" breadcrumbs={[{ label: "Home", href: ROUTES.home }, { label: "Contact Us" }]} />
+      <PageHeader title={t.pages.contact.title} breadcrumbs={[{ label: t.common.home, href: ROUTES.home }, { label: t.pages.contact.crumb }]} />
       <ContactSection />
       <MapSection />
     </>

@@ -3,10 +3,20 @@ import Link from "next/link";
 
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { FaqAccordion } from "@/components/shared/FaqAccordion";
-import { FAQS } from "@/constants/faqs";
 import { ROUTES } from "@/constants/routes";
+import { localizeFaqs } from "@/i18n/localize";
+import { getDictionary } from "@/i18n/server";
+import { wowDelay } from "@/lib/animation";
 
-export function ProjectDetails() {
+const PROCESS_ICONS = [
+  "/images/icon-construction-process-item-1.svg",
+  "/images/icon-construction-process-item-2.svg",
+  "/images/icon-construction-process-item-3.svg",
+] as const;
+
+export async function ProjectDetails() {
+  const dict = await getDictionary();
+  const t = dict.projectDetail;
   return (
     <div className="page-project-single">
       <div className="container">
@@ -14,26 +24,26 @@ export function ProjectDetails() {
           <div className="col-lg-4">
             <div className="page-single-sidebar">
               <div className="page-category-list wow fadeInUp">
-                <h2 className="page-category-list-title">Project Information</h2>
+                <h2 className="page-category-list-title">{t.info}</h2>
                 <div className="project-category-item-list">
                   <div className="project-category-item">
-                    <h3>Project Type:</h3>
-                    <p>Residential</p>
+                    <h3>{t.type}</h3>
+                    <p>{t.typeValue}</p>
                   </div>
                   <div className="project-category-item">
-                    <h3>Client Name:</h3>
-                    <p>The Johnson Family</p>
+                    <h3>{t.client}</h3>
+                    <p>{t.clientValue}</p>
                   </div>
                   <div className="project-category-item">
-                    <h3>Duration:</h3>
-                    <p>10 Months</p>
+                    <h3>{t.duration}</h3>
+                    <p>{t.durationValue}</p>
                   </div>
                   <div className="project-category-item">
-                    <h3>Location:</h3>
-                    <p>Green Valley Estate</p>
+                    <h3>{t.location}</h3>
+                    <p>{t.locationValue}</p>
                   </div>
                   <div className="project-category-item project-category-social-links">
-                    <h3>Share Project:</h3>
+                    <h3>{t.share}</h3>
                     <ul>
                       <li><a href="#"><i className="fa-brands fa-pinterest-p" /></a></li>
                       <li><a href="#"><i className="fa-brands fa-x-twitter" /></a></li>
@@ -47,9 +57,9 @@ export function ProjectDetails() {
                 <div className="sidebar-cta-logo"><Image src="/images/side-bar-cta-icon.png" alt="" width={58} height={60} unoptimized /></div>
                 <div className="sidebar-cta-box-body">
                   <div className="sidebar-cta-box-content">
-                    <p>Let&apos;s Connect with Our Expert Construction Team and Start Building Today</p>
+                    <p>{dict.common.sidebarCta}</p>
                   </div>
-                  <div className="sidebar-cta-box-btn"><Link href={ROUTES.contact} className="readmore-btn">Contact Now</Link></div>
+                  <div className="sidebar-cta-box-btn"><Link href={ROUTES.contact} className="readmore-btn">{dict.common.contactNow}</Link></div>
                 </div>
               </div>
             </div>
@@ -61,22 +71,22 @@ export function ProjectDetails() {
               </div>
               <div className="project-entry">
                 <div className="project-entry-info">
-                  <h2 className="text-anime-style-3">Project overview</h2>
-                  <p className="wow fadeInUp">The Modern Family Villa is a premium residential project designed to combine contemporary architecture with everyday comfort. Built for a growing family, this custom home features spacious living areas, elegant interiors, and energy-efficient construction that creates a perfect balance between style and functionality.</p>
-                  <p className="wow fadeInUp" data-wow-delay="0.2s">Every stage of the project was carefully managed to deliver exceptional quality and a comfortable experience. With a thoughtfully planned layout, refined finishes, and attention to architectural detail, the villa offers a modern lifestyle that feels both luxurious and practical.</p>
+                  <h2 className="text-anime-style-3">{t.overviewTitle}</h2>
+                  <p className="wow fadeInUp">{t.overview1}</p>
+                  <p className="wow fadeInUp" data-wow-delay="0.2s">{t.overview2}</p>
                 </div>
                 <div className="project-challenges-box">
-                  <h2 className="text-anime-style-3">Challenges &amp; solutions</h2>
-                  <p className="wow fadeInUp">Through efficient planning, regular site inspections, and proactive communication, every milestone was completed successfully without compromising quality or safety.</p>
+                  <h2 className="text-anime-style-3">{t.challengesTitle}</h2>
+                  <p className="wow fadeInUp">{t.challengesIntro}</p>
                   <div className="project-challenges-image-list">
                     <div className="project-challenges-items-list">
                       <div className="project-challenges-item wow fadeInUp" data-wow-delay="0.2s">
-                        <h3>Project Challenges</h3>
-                        <p>The project required careful coordination of trades, deliveries, and quality control throughout every construction phase.</p>
+                        <h3>{t.challenges}</h3>
+                        <p>{t.challengesText}</p>
                       </div>
                       <div className="project-challenges-item wow fadeInUp" data-wow-delay="0.4s">
-                        <h3>Our Solutions</h3>
-                        <p>We overcame these challenges planning, close supervision, and clear, delivering the home on time with excellent quality.</p>
+                        <h3>{t.solutions}</h3>
+                        <p>{t.solutionsText}</p>
                       </div>
                     </div>
                     <div className="project-challenges-image">
@@ -84,50 +94,28 @@ export function ProjectDetails() {
                     </div>
                   </div>
                   <div className="project-construction-process-box">
-                    <h2 className="text-anime-style-3">Construction process</h2>
-                    <p className="wow fadeInUp">From initial consultation to final handover, we manage every stage with careful planning, skilled execution, and consistent quality control to ensure a smooth and successful build.</p>
+                    <h2 className="text-anime-style-3">{t.processTitle}</h2>
+                    <p className="wow fadeInUp">{t.processIntro}</p>
                     <div className="construction-process-item-list">
-                      <div className="construction-process-item wow fadeInUp" data-wow-delay="0.2s">
-                        <div className="construction-process-item-header">
-                          <div className="icon-box"><Image src="/images/icon-construction-process-item-1.svg" alt="" width={40} height={40} /></div>
-                          <div className="construction-process-item-no">
-                            <h3>01</h3>
+                      {t.steps.map((step, index) => (
+                        <div className="construction-process-item wow fadeInUp" data-wow-delay={wowDelay(index + 1)} key={step}>
+                          <div className="construction-process-item-header">
+                            <div className="icon-box"><Image src={PROCESS_ICONS[index]} alt="" width={40} height={40} /></div>
+                            <div className="construction-process-item-no">
+                              <h3>{String(index + 1).padStart(2, "0")}</h3>
+                            </div>
+                          </div>
+                          <div className="construction-process-item-body">
+                            <h3>{step}</h3>
+                            <p>{t.stepText}</p>
                           </div>
                         </div>
-                        <div className="construction-process-item-body">
-                          <h3>Planning &amp; Design</h3>
-                          <p>Created architectural drawings, plans, project schedules.</p>
-                        </div>
-                      </div>
-                      <div className="construction-process-item wow fadeInUp" data-wow-delay="0.4s">
-                        <div className="construction-process-item-header">
-                          <div className="icon-box"><Image src="/images/icon-construction-process-item-2.svg" alt="" width={40} height={40} /></div>
-                          <div className="construction-process-item-no">
-                            <h3>02</h3>
-                          </div>
-                        </div>
-                        <div className="construction-process-item-body">
-                          <h3>Additional Finishing</h3>
-                          <p>Created architectural drawings, plans, project schedules.</p>
-                        </div>
-                      </div>
-                      <div className="construction-process-item wow fadeInUp" data-wow-delay="0.6s">
-                        <div className="construction-process-item-header">
-                          <div className="icon-box"><Image src="/images/icon-construction-process-item-3.svg" alt="" width={40} height={40} /></div>
-                          <div className="construction-process-item-no">
-                            <h3>03</h3>
-                          </div>
-                        </div>
-                        <div className="construction-process-item-body">
-                          <h3>Final Inspection</h3>
-                          <p>Created architectural drawings, plans, project schedules.</p>
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   </div>
                   <div className="project-entry-contact-info">
-                    <h2 className="text-anime-style-3">Contact our construction team</h2>
-                    <p className="wow fadeInUp">Explore the complete journey of this project—from initial planning and architectural design to expert construction and final completion. Discover how our commitment to ideas into exceptional spaces built to last.</p>
+                    <h2 className="text-anime-style-3">{t.contactTitle}</h2>
+                    <p className="wow fadeInUp">{t.contactText}</p>
                     <div className="project-contact-item-list">
                       <div className="satisfy-client-box wow fadeInUp" data-wow-delay="0.2s">
                         <div className="satisfy-client-images">
@@ -145,15 +133,15 @@ export function ProjectDetails() {
                           </div>
                         </div>
                         <div className="satisfy-client-content">
-                          <h3>Professionals committed to building better spaces</h3>
+                          <h3>{dict.team.title}</h3>
                         </div>
                       </div>
                       <div className="project-contact-item wow fadeInUp" data-wow-delay="0.4s">
                         <div className="project-contact-item-content">
                           <div className="project-contact-content">
-                            <p>We turn your ideas into reality with quality workmanship every time.</p>
+                            <p>{t.turnIdeas}</p>
                           </div>
-                          <div className="project-contact-btn"><Link href={ROUTES.contact} className="readmore-btn">Request a Consultation</Link></div>
+                          <div className="project-contact-btn"><Link href={ROUTES.contact} className="readmore-btn">{t.requestConsultation}</Link></div>
                         </div>
                         <div className="project-contact-item-image">
                           <figure><Image src="/images/project-contact-item-image.jpg" alt="" width={414} height={157} unoptimized /></figure>
@@ -164,10 +152,8 @@ export function ProjectDetails() {
                 </div>
               </div>
               <div className="page-single-faqs">
-                <SectionTitle
-                  title="Frequently asked questions"
-                />
-                <FaqAccordion items={FAQS.general} />
+                <SectionTitle title={dict.common.faqTitle} />
+                <FaqAccordion items={localizeFaqs("general", dict.content)} />
               </div>
             </div>
           </div>

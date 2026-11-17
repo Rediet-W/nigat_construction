@@ -7,6 +7,7 @@ import { VideoPopup } from "@/components/ui/VideoPopup";
 import { ROUTES } from "@/constants/routes";
 import { PROMO_VIDEO_URL } from "@/constants/site";
 import { HeroImageSlider } from "@/features/home/components/HeroImageSlider";
+import { getDictionary } from "@/i18n/server";
 
 export type HeroVariant = "image" | "slider" | "video";
 
@@ -16,10 +17,17 @@ const HERO_CLASS: Record<HeroVariant, string> = {
   video: "hero hero-video-layout dark-section",
 };
 
-const HERO_VIDEO_URL = "https://demo.awaikenthemes.com/assets/videos/builtex-hero-video.mp4";
+const HERO_VIDEO_URL =
+  "https://demo.awaikenthemes.com/assets/videos/builtex-hero-video.mp4";
 
 /** Home hero; the three home pages differ only in the background (parallax image, slider or video). */
-export function HeroSection({ variant = "image" }: { variant?: HeroVariant }) {
+export async function HeroSection({
+  variant = "image",
+}: {
+  variant?: HeroVariant;
+}) {
+  const dict = await getDictionary();
+  const t = dict.hero;
   return (
     <div className={HERO_CLASS[variant]}>
       {variant === "slider" && <HeroImageSlider />}
@@ -33,17 +41,32 @@ export function HeroSection({ variant = "image" }: { variant?: HeroVariant }) {
           <div className="col-xl-7">
             <div className="hero-content">
               <SectionTitle
-                subtitle="Built With Trust"
+                subtitle={t.subtitle}
                 as="h1"
-                title="Building excellence since day one"
-                description="Our experienced team transforms ideas into exceptional residential and commercial developments using premium materials, innovative engineering."
+                title={t.title}
+                description={dict.meta.description}
               />
-              <div className="hero-content-body wow fadeInUp" data-wow-delay="0.4s">
-                <div className="hero-btn"><Link href={ROUTES.contact} className="btn-default btn-highlighted">Get Started</Link></div>
+              <div
+                className="hero-content-body wow fadeInUp"
+                data-wow-delay="0.4s"
+              >
+                <div className="hero-btn">
+                  <Link
+                    href={ROUTES.contact}
+                    className="btn-default btn-highlighted"
+                  >
+                    {t.getStarted}
+                  </Link>
+                </div>
                 <div className="video-play-button">
-                  <VideoPopup href={PROMO_VIDEO_URL} data-cursor-text="Play">
-                    <span className="bg-effect"><i className="fa-solid fa-play" /></span>
-                    <p>Explore Video</p>
+                  <VideoPopup
+                    href={PROMO_VIDEO_URL}
+                    data-cursor-text={dict.common.play}
+                  >
+                    <span className="bg-effect">
+                      <i className="fa-solid fa-play" />
+                    </span>
+                    <p>{t.exploreVideo}</p>
                   </VideoPopup>
                 </div>
               </div>
@@ -54,24 +77,58 @@ export function HeroSection({ variant = "image" }: { variant?: HeroVariant }) {
               <div className="satisfy-client-box wow fadeInUp">
                 <div className="satisfy-client-images">
                   <div className="satisfy-client-image">
-                    <figure className="image-anime"><Image src="/images/author-1.jpg" alt="" width={50} height={50} unoptimized /></figure>
+                    <figure className="image-anime">
+                      <Image
+                        src="/images/author-1.jpg"
+                        alt=""
+                        width={50}
+                        height={50}
+                        unoptimized
+                      />
+                    </figure>
                   </div>
                   <div className="satisfy-client-image">
-                    <figure className="image-anime"><Image src="/images/author-2.jpg" alt="" width={50} height={50} unoptimized /></figure>
+                    <figure className="image-anime">
+                      <Image
+                        src="/images/author-2.jpg"
+                        alt=""
+                        width={50}
+                        height={50}
+                        unoptimized
+                      />
+                    </figure>
                   </div>
                   <div className="satisfy-client-image">
-                    <figure className="image-anime"><Image src="/images/author-3.jpg" alt="" width={50} height={50} unoptimized /></figure>
+                    <figure className="image-anime">
+                      <Image
+                        src="/images/author-3.jpg"
+                        alt=""
+                        width={50}
+                        height={50}
+                        unoptimized
+                      />
+                    </figure>
                   </div>
                   <div className="satisfy-client-image">
-                    <figure className="image-anime"><Image src="/images/author-4.jpg" alt="" width={50} height={50} unoptimized /></figure>
+                    <figure className="image-anime">
+                      <Image
+                        src="/images/author-4.jpg"
+                        alt=""
+                        width={50}
+                        height={50}
+                        unoptimized
+                      />
+                    </figure>
                   </div>
-                  <div className="satisfy-client-image add-more"><i className="fa-solid fa-plus" /></div>
+                  <div className="satisfy-client-image add-more">
+                    <i className="fa-solid fa-plus" />
+                  </div>
                 </div>
                 <div className="satisfy-client-content">
-                  <p>8+ Years of Trusted Construction Excellence</p>
+                  <p>{t.yearsBadge}</p>
                 </div>
               </div>
-              <div className="quality-construction-circle wow fadeInUp" data-wow-delay="0.2s"><Image src="/images/quality-construction-circle.svg" alt="" width={137} height={137} /></div>
+              {/* <div className="quality-construction-circle wow fadeInUp" data-wow-delay="0.2s"><Image src="/images/quality-construction-circle.svg" alt="" width={137} height={137} /></div> */}
             </div>
           </div>
         </div>
