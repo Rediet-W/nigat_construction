@@ -1,10 +1,11 @@
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import { MAP_EMBED_URL } from "@/constants/site";
 import { getDictionary } from "@/i18n/server";
+import { getContactInfo } from "@/lib/cms/content";
 
-/** Contact page map. The pinned place is set by MAP_COORDINATES in src/constants/site.ts. */
+/** Contact page map: the embed URL is the site setting's contact "mapUrl" in the CMS. Hidden when empty. */
 export async function MapSection() {
-  const t = await getDictionary();
+  const [t, contact] = await Promise.all([getDictionary(), getContactInfo()]);
+  if (!contact.mapUrl) return null;
   return (
     <div className="google-map">
       <div className="container">
@@ -17,7 +18,7 @@ export async function MapSection() {
           <div className="col-lg-12">
             <div className="google-map-iframe wow fadeInUp" data-wow-delay="0.4s">
               <iframe
-                src={MAP_EMBED_URL}
+                src={contact.mapUrl}
                 title={t.map.iframeTitle}
                 allowFullScreen
                 loading="lazy"

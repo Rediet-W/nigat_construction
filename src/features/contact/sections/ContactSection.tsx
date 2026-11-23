@@ -1,12 +1,12 @@
 import Image from "next/image";
 
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import { CONTACT_INFO } from "@/constants/site";
 import { ContactForm, FormField, FormSubmit } from "@/features/contact/components/ContactForm";
 import { getDictionary } from "@/i18n/server";
+import { getContactInfo } from "@/lib/cms/content";
 
 export async function ContactSection() {
-  const t = await getDictionary();
+  const [t, contact] = await Promise.all([getDictionary(), getContactInfo()]);
   const f = t.form;
   return (
     <div className="page-contact-us">
@@ -28,14 +28,14 @@ export async function ContactSection() {
                     <div className="icon-box"><Image src="/images/icon-phone-primary.svg" alt="" width={25} height={25} /></div>
                     <div className="contact-us-item-content">
                       <p>{t.contact.phoneLabel}</p>
-                      <h3><a href={CONTACT_INFO.phone.href}>{CONTACT_INFO.phone.label}</a></h3>
+                      <h3><a href={contact.phone?.href}>{contact.phone?.label}</a></h3>
                     </div>
                   </div>
                   <div className="contact-us-item">
                     <div className="icon-box"><Image src="/images/icon-email-primary.svg" alt="" width={25} height={25} /></div>
                     <div className="contact-us-item-content">
                       <p>{t.contact.emailLabel}</p>
-                      <h3><a href={CONTACT_INFO.email.href}>{CONTACT_INFO.email.label}</a></h3>
+                      <h3><a href={contact.email?.href}>{contact.email?.label}</a></h3>
                     </div>
                   </div>
                 </div>

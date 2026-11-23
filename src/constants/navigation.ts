@@ -1,4 +1,4 @@
-import type { NavItem, SocialLink } from "@/types";
+import type { NavItem } from "@/types";
 import { ROUTES } from "@/constants/routes";
 
 /** Main menu, identical in every page of the original template. */
@@ -50,23 +50,4 @@ export const FOOTER_SERVICE_IDS: readonly string[] = [
   "wall-cladding-systems",
   "custom-furnishing-joinery-works",
   "acoustic-renovation-soundproofing-works",
-];
-
-/** Official company social media profiles. */
-export const SOCIAL_LINKS: readonly SocialLink[] = [
-  {
-    label: "TikTok",
-    href: "https://www.tiktok.com/@nigat.fanawi",
-    icon: "fa-brands fa-tiktok",
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/company/nigatfanawi",
-    icon: "fa-brands fa-linkedin-in",
-  },
-  {
-    label: "Facebook",
-    href: "https://web.facebook.com/profile.php?id=61596065924984",
-    icon: "fa-brands fa-facebook-f",
-  },
 ];

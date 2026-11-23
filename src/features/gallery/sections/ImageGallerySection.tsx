@@ -1,10 +1,12 @@
 import { ImageGallery } from "@/features/gallery/components/ImageGallery";
+import { getGalleryImages } from "@/lib/cms/content";
 
-export function ImageGallerySection() {
+export async function ImageGallerySection() {
+  const images = await getGalleryImages();
   return (
     <div className="page-gallery">
       <div className="container">
-        <ImageGallery />
+        <ImageGallery images={images} />
       </div>
     </div>
   );

@@ -5,11 +5,11 @@ import { Counter } from "@/components/ui/Counter";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { FaqAccordion } from "@/components/shared/FaqAccordion";
 import { ROUTES } from "@/constants/routes";
-import { localizeFaqs } from "@/i18n/localize";
 import { getDictionary } from "@/i18n/server";
+import { getFaqItems } from "@/lib/cms/content";
 
 export async function FaqSection() {
-  const dict = await getDictionary();
+  const [dict, faqs] = await Promise.all([getDictionary(), getFaqItems("general")]);
   const t = dict.faq;
   return (
     <div className="our-faqs light-section">
@@ -73,7 +73,7 @@ export async function FaqSection() {
             </div>
           </div>
           <div className="col-xl-6">
-            <FaqAccordion items={localizeFaqs("general", dict.content)} />
+            <FaqAccordion items={faqs} />
           </div>
         </div>
       </div>

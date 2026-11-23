@@ -1,16 +1,14 @@
 import { PostCard } from "@/features/blog/components/PostCard";
-import { POSTS } from "@/constants/posts";
-import { localize } from "@/i18n/localize";
-import { getDictionary } from "@/i18n/server";
+import { getPosts } from "@/lib/cms/content";
 import { wowDelay } from "@/lib/animation";
 
 export async function BlogGrid() {
-  const dict = await getDictionary();
+  const posts = await getPosts();
   return (
     <div className="page-blog">
       <div className="container">
         <div className="row">
-          {localize(POSTS.slice(0, 6), dict.content.posts).map((post, index) => (
+          {posts.map((post, index) => (
             <div className="col-xl-4 col-md-6" key={post.id}>
               <PostCard post={post} delay={wowDelay(index % 3)} />
             </div>

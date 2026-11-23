@@ -4,14 +4,11 @@ import Link from "next/link";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { FaqAccordion } from "@/components/shared/FaqAccordion";
 import { ROUTES } from "@/constants/routes";
-import type { FaqCategory } from "@/i18n/dictionaries/en";
-import { localizeFaqs } from "@/i18n/localize";
 import { getDictionary } from "@/i18n/server";
-
-const CATEGORIES: readonly FaqCategory[] = ["general", "process", "pricing", "design", "warranty"];
+import { getFaqGroups } from "@/lib/cms/content";
 
 export async function FaqsPageSection() {
-  const dict = await getDictionary();
+  const [dict, groups] = await Promise.all([getDictionary(), getFaqGroups()]);
   const t = dict.faqsPage;
   return (
     <div className="page-faqs">
@@ -21,8 +18,8 @@ export async function FaqsPageSection() {
             <div className="page-single-sidebar">
               <div className="page-category-list wow fadeInUp">
                 <ul>
-                  {CATEGORIES.map((category, index) => (
-                    <li key={category}><a href={`#faq_${index + 1}`}>{t.links[category]}</a></li>
+                  {groups.map((group, index) => (
+                    <li key={group.id}><a href={`#faq_${index + 1}`}>{t.links[group.id as keyof typeof t.links] ?? group.title}</a></li>
                   ))}
                 </ul>
               </div>
@@ -39,10 +36,10 @@ export async function FaqsPageSection() {
           </div>
           <div className="col-lg-8">
             <div className="page-faqs-category">
-              {CATEGORIES.map((category, index) => (
-                <div className="page-faq-accordion" id={`faq_${index + 1}`} key={category}>
-                  <SectionTitle title={t.titles[category]} />
-                  <FaqAccordion items={localizeFaqs(category, dict.content)} />
+              {groups.map((group, index) => (
+                <div className="page-faq-accordion" id={`faq_${index + 1}`} key={group.id}>
+                  <SectionTitle title={group.title} />
+                  <FaqAccordion items={group.items} />
                 </div>
               ))}
             </div>

@@ -4,14 +4,13 @@ import Link from "next/link";
 import { Counter } from "@/components/ui/Counter";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ProjectCard } from "@/features/projects/components/ProjectCard";
-import { PROJECTS } from "@/constants/projects";
 import { wowDelay } from "@/lib/animation";
 import { ROUTES } from "@/constants/routes";
-import { localize } from "@/i18n/localize";
 import { getDictionary } from "@/i18n/server";
+import { getProjects } from "@/lib/cms/content";
 
 export async function ProjectsSection() {
-  const dict = await getDictionary();
+  const [dict, projects] = await Promise.all([getDictionary(), getProjects(true)]);
   const t = dict.projects;
   return (
     <div className="our-project dark-section">
@@ -33,7 +32,7 @@ export async function ProjectsSection() {
           </div>
         </div>
         <div className="row">
-          {localize(PROJECTS.slice(0, 4), dict.content.projects).map((project, index) => (
+          {projects.slice(0, 4).map((project, index) => (
             <div className="col-xl-3 col-md-6" key={project.id}>
               <ProjectCard project={project} delay={wowDelay(index)} />
             </div>

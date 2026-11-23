@@ -3,14 +3,34 @@ import Image from "next/image";
 import { Counter } from "@/components/ui/Counter";
 import { SkillBar } from "@/components/ui/SkillBar";
 import { ContactForm, FormField, FormSubmit } from "@/features/contact/components/ContactForm";
+import { RichText, splitSections } from "@/components/ui/RichText";
 import { getDictionary } from "@/i18n/server";
+import type { TeamMemberDetail } from "@/lib/cms/content";
+
+const SOCIAL_ICONS: Record<string, string> = {
+  Facebook: "fa-brands fa-facebook-f",
+  Instagram: "fa-brands fa-instagram",
+  LinkedIn: "fa-brands fa-linkedin-in",
+  Telegram: "fa-brands fa-telegram",
+  TikTok: "fa-brands fa-tiktok",
+  WhatsApp: "fa-brands fa-whatsapp",
+  X: "fa-brands fa-x-twitter",
+  YouTube: "fa-brands fa-youtube",
+};
 
 const SKILL_PERCENTS = [95, 92, 96] as const;
 
-export async function TeamMemberDetails() {
+/**
+ * One team member. The CMS bio's opening text fills "About me"; its first "## " section
+ * (e.g. "## Work experience") fills the experience block.
+ */
+export async function TeamMemberDetails({ member }: { member: TeamMemberDetail }) {
   const dict = await getDictionary();
   const t = dict.teamMember;
   const f = dict.form;
+  const [intro, ...sections] = splitSections(member.bio);
+  const about = intro?.heading ? null : intro;
+  const experience = intro?.heading ? [intro, ...sections] : sections;
   return (
     <div className="page-team-single">
       <div className="container">
@@ -19,46 +39,50 @@ export async function TeamMemberDetails() {
             <div className="page-team-single-box">
               <div className="team-member-about">
                 <div className="team-single-image">
-                  <figure className="image-anime reveal"><Image src="/images/team-1.jpg" alt="" width={400} height={491} unoptimized /></figure>
+                  <figure className="image-anime reveal"><Image src={member.image} alt={member.name} width={400} height={491} unoptimized /></figure>
                 </div>
                 <div className="team-about-content">
                   <div className="section-title">
                     <h2 className="text-anime-style-3" data-cursor="-opaque">{t.aboutMe}</h2>
-                    <p className="wow fadeInUp">{t.bio}</p>
+                    {about && <RichText text={about.body} />}
                   </div>
-                  <div className="team-about-contact-list wow fadeInUp" data-wow-delay="0.2s">
-                    <ul>
-                      <li><span>{t.phone}</span> +1 (800) 555-2486</li>
-                      <li><span>{t.email}</span>info@domainname.com</li>
-                      <li><span>{t.location}</span> {t.locationValue}</li>
-                      <li><span>{t.experience}</span> {t.experienceValue}</li>
-                      <li><span>{t.specialization}</span> {t.specializationValue}</li>
-                    </ul>
-                  </div>
-                  <div className="team-member-social-list wow fadeInUp" data-wow-delay="0.4s">
-                    <h2>{t.follow}</h2>
-                    <ul>
-                      <li><a href="#"><i className="fa-brands fa-pinterest-p" /></a></li>
-                      <li><a href="#"><i className="fa-brands fa-x-twitter" /></a></li>
-                      <li><a href="#"><i className="fa-brands fa-facebook-f" /></a></li>
-                      <li><a href="#"><i className="fa-brands fa-instagram" /></a></li>
-                    </ul>
-                  </div>
+                  {(member.phone || member.email) && (
+                    <div className="team-about-contact-list wow fadeInUp" data-wow-delay="0.2s">
+                      <ul>
+                        {member.phone && (
+                          <li><span>{t.phone}</span> <a href={`tel:${member.phone.replace(/[^d+]/g, "")}`}>{member.phone}</a></li>
+                        )}
+                        {member.email && (
+                          <li><span>{t.email}</span> <a href={`mailto:${member.email}`}>{member.email}</a></li>
+                        )}
+                      </ul>
+                    </div>
+                  )}
+                  {member.socialLinks.length > 0 && (
+                    <div className="team-member-social-list wow fadeInUp" data-wow-delay="0.4s">
+                      <h2>{t.follow}</h2>
+                      <ul>
+                        {member.socialLinks.map((link) => (
+                          <li key={link.url}>
+                            <a href={link.url} aria-label={link.platform} target="_blank" rel="noopener noreferrer">
+                              <i className={SOCIAL_ICONS[link.platform] ?? "fa-solid fa-link"} />
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
+              {experience.length > 0 && (
               <div className="member-experience-info">
                 <div className="member-experience-content">
-                  <div className="section-title">
-                    <h2 className="text-anime-style-3" data-cursor="-opaque">{t.workTitle}</h2>
-                    <p className="wow fadeInUp">{t.workText}</p>
-                  </div>
-                  <div className="member-experience-list wow fadeInUp" data-wow-delay="0.2s">
-                    <ul>
-                      {t.workList.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
+                  {experience.map((section, index) => (
+                    <div className="section-title" key={index}>
+                      {section.heading && <h2 className="text-anime-style-3" data-cursor="-opaque">{section.heading}</h2>}
+                      <RichText text={section.body} listClassName="member-experience-list" />
+                    </div>
+                  ))}
                 </div>
                 <div className="member-experience-image-box">
                   <div className="member-experience-image">
@@ -69,6 +93,7 @@ export async function TeamMemberDetails() {
                   </div>
                 </div>
               </div>
+              )}
               <div className="team-member-skill-box">
                 <div className="contact-us-form">
                   <div className="contact-us-form-title wow fadeInUp">

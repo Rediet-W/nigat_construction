@@ -5,11 +5,11 @@ import { Counter } from "@/components/ui/Counter";
 import { VideoPopup } from "@/components/ui/VideoPopup";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ROUTES } from "@/constants/routes";
-import { PROMO_VIDEO_URL } from "@/constants/site";
 import { getDictionary } from "@/i18n/server";
+import { getPromoVideoUrl } from "@/lib/cms/content";
 
 export async function AboutUsSection() {
-  const dict = await getDictionary();
+  const [dict, promoVideoUrl] = await Promise.all([getDictionary(), getPromoVideoUrl()]);
   const t = dict.about;
   return (
     <div className="about-us">
@@ -55,7 +55,7 @@ export async function AboutUsSection() {
                   />
                 </figure>
                 <div className="video-play-button">
-                  <VideoPopup href={PROMO_VIDEO_URL} data-cursor-text={dict.common.play}>
+                  <VideoPopup href={promoVideoUrl} data-cursor-text={dict.common.play}>
                     <span className="bg-effect">
                       <i className="fa-solid fa-play" />
                     </span>

@@ -4,15 +4,15 @@ import Image from "next/image";
 import { useCallback, useState } from "react";
 
 import { Lightbox } from "@/components/ui/Lightbox";
-import { GALLERY_IMAGES } from "@/constants/gallery";
 import { useI18n } from "@/i18n/I18nProvider";
 import { wowDelay } from "@/lib/animation";
+import type { GalleryImage } from "@/types";
 
 /** Photo grid with a Magnific-style gallery lightbox (prev/next, counter, keyboard). */
-export function ImageGallery() {
+export function ImageGallery({ images }: { images: readonly (GalleryImage & { alt: string })[] }) {
   const { dict } = useI18n();
   const [active, setActive] = useState<number | null>(null);
-  const count = GALLERY_IMAGES.length;
+  const count = images.length;
 
   const close = useCallback(() => setActive(null), []);
   const prev = useCallback(() => setActive((i) => (i === null ? i : (i - 1 + count) % count)), [count]);
@@ -21,7 +21,7 @@ export function ImageGallery() {
   return (
     <>
       <div className="row gallery-items page-gallery-box">
-        {GALLERY_IMAGES.map((image, index) => (
+        {images.map((image, index) => (
           <div className="col-lg-4 col-6" key={image.src}>
             <div className="photo-gallery wow fadeInUp" data-wow-delay={wowDelay(index)}>
               <a
@@ -33,7 +33,7 @@ export function ImageGallery() {
                 }}
               >
                 <figure className="image-anime">
-                  <Image src={image.src} alt="" width={image.width} height={image.height} />
+                  <Image src={image.src} alt={image.alt} width={image.width} height={image.height} />
                 </figure>
               </a>
             </div>
@@ -54,7 +54,7 @@ export function ImageGallery() {
             <figure>
               {/* Full-resolution image sized by magnific-popup.css (max-height = viewport - 80px). */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className="mfp-img" src={GALLERY_IMAGES[active].src} alt="" style={{ maxHeight: "calc(100vh - 80px)" }} />
+              <img className="mfp-img" src={images[active].src} alt={images[active].alt} style={{ maxHeight: "calc(100vh - 80px)" }} />
               <figcaption>
                 <div className="mfp-bottom-bar">
                   <div className="mfp-title" />

@@ -5,15 +5,9 @@ import { NewsletterForm } from "@/components/layout/NewsletterForm";
 import { SiteLogo } from "@/components/layout/SiteLogo";
 import { groupNavigation } from "@/constants/nigat-group";
 import { ROUTES } from "@/constants/routes";
-import {
-  FOOTER_QUICK_LINKS,
-  FOOTER_SERVICE_IDS,
-  SOCIAL_LINKS,
-} from "@/constants/navigation";
-import { SERVICES } from "@/constants/services";
-import { CONTACT_INFO } from "@/constants/site";
-import { localize } from "@/i18n/localize";
+import { FOOTER_QUICK_LINKS, FOOTER_SERVICE_IDS } from "@/constants/navigation";
 import { getDictionary, getLocale } from "@/i18n/server";
+import { getContactInfo, getServices, getSocialLinks } from "@/lib/cms/content";
 
 function FooterLinks({
   title,
@@ -37,13 +31,19 @@ function FooterLinks({
 }
 
 export async function Footer() {
-  const [t, locale] = await Promise.all([getDictionary(), getLocale()]);
+  const [t, locale, services, contact, socialLinks] = await Promise.all([
+    getDictionary(),
+    getLocale(),
+    getServices(),
+    getContactInfo(),
+    getSocialLinks(),
+  ]);
   const group = groupNavigation(locale, ROUTES.home);
   const quickLinks = FOOTER_QUICK_LINKS.map((link) => ({
     label: t.nav[link.labelKey],
     href: link.href,
   }));
-  const serviceLinks = localize(SERVICES, t.content.services)
+  const serviceLinks = services
     .filter((service) => FOOTER_SERVICE_IDS.includes(service.id))
     .map((service) => ({ label: service.title, href: service.href }));
 
@@ -58,7 +58,7 @@ export async function Footer() {
               </div>
               <div className="footer-social-links">
                 <ul>
-                  {SOCIAL_LINKS.map((social) => (
+                  {socialLinks.map((social) => (
                     <li key={social.label}>
                       <a href={social.href} aria-label={social.label}>
                         <i className={social.icon} />
@@ -74,36 +74,33 @@ export async function Footer() {
             <div className="footer-links-box">
               <div className="footer-links footer-contact-box">
                 <ul>
-                  <li>
-                    <Image
-                      src="/images/icon-phone-white.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                    />
-                    <a href={CONTACT_INFO.phone.href}>
-                      {CONTACT_INFO.phone.label}
-                    </a>
-                    /
-                    <a href={CONTACT_INFO.altPhone.href}>
-                      {CONTACT_INFO.altPhone.label}
-                    </a>
-                  </li>
-                  {/* <li>
-                    <Image src="/images/icon-phone-white.svg" alt="" width={24} height={24} />
-                    <a href={CONTACT_INFO.altPhone.href}>{CONTACT_INFO.altPhone.label}</a>
-                  </li> */}
-                  <li>
-                    <Image
-                      src="/images/icon-mail-white.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                    />
-                    <a href={CONTACT_INFO.email.href}>
-                      {CONTACT_INFO.email.label}
-                    </a>
-                  </li>
+                  {contact.phone && (
+                    <li>
+                      <Image
+                        src="/images/icon-phone-white.svg"
+                        alt=""
+                        width={24}
+                        height={24}
+                      />
+                      <a href={contact.phone.href}>{contact.phone.label}</a>
+                      {contact.altPhone && (
+                        <>
+                          /<a href={contact.altPhone.href}>{contact.altPhone.label}</a>
+                        </>
+                      )}
+                    </li>
+                  )}
+                  {contact.email && (
+                    <li>
+                      <Image
+                        src="/images/icon-mail-white.svg"
+                        alt=""
+                        width={24}
+                        height={24}
+                      />
+                      <a href={contact.email.href}>{contact.email.label}</a>
+                    </li>
+                  )}
                   <li>
                     <Image
                       src="/images/icon-location-white.svg"
@@ -111,14 +108,14 @@ export async function Footer() {
                       width={24}
                       height={24}
                     />
-                    {t.common.address}
+                    {contact.address}
                   </li>
                   <li>
                     <i
                       className="fa-regular fa-clock footer-contact-icon"
                       aria-hidden="true"
                     />
-                    {t.common.hours}
+                    {contact.hours}
                   </li>
                 </ul>
               </div>

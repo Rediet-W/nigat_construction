@@ -1,16 +1,14 @@
 import { ServiceCard } from "@/features/services/components/ServiceCard";
-import { SERVICES } from "@/constants/services";
-import { localize } from "@/i18n/localize";
-import { getDictionary } from "@/i18n/server";
+import { getServices } from "@/lib/cms/content";
 import { wowDelay } from "@/lib/animation";
 
 export async function ServicesGrid() {
-  const dict = await getDictionary();
+  const services = await getServices();
   return (
     <div className="page-services">
       <div className="container">
         <div className="row">
-          {localize(SERVICES, dict.content.services).map((service, index) => (
+          {services.map((service, index) => (
             <div className="col-xl-3 col-md-6" key={service.id}>
               <ServiceCard service={service} delay={wowDelay(index % 8)} />
             </div>

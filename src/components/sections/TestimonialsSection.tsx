@@ -6,9 +6,10 @@ import { SectionTitle } from "@/components/ui/SectionTitle";
 import { TestimonialSlider } from "@/features/testimonials/components/TestimonialSlider";
 import { ROUTES } from "@/constants/routes";
 import { getDictionary } from "@/i18n/server";
+import { getTestimonials } from "@/lib/cms/content";
 
 export async function TestimonialsSection() {
-  const dict = await getDictionary();
+  const [dict, testimonials] = await Promise.all([getDictionary(), getTestimonials()]);
   const t = dict.testimonials;
   return (
     <div className="our-testimonial">
@@ -104,7 +105,7 @@ export async function TestimonialsSection() {
             </div>
           </div>
           <div className="col-xl-8 col-md-6">
-            <TestimonialSlider />
+            <TestimonialSlider testimonials={testimonials} />
           </div>
           <div className="col-lg-12">
             <div

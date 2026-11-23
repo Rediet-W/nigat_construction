@@ -5,11 +5,11 @@ import { VideoPopup } from "@/components/ui/VideoPopup";
 import { BackgroundVideo } from "@/components/ui/BackgroundVideo";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ROUTES } from "@/constants/routes";
-import { CONTACT_INFO, PROMO_VIDEO_URL } from "@/constants/site";
 import { getDictionary } from "@/i18n/server";
+import { getContactInfo, getPromoVideoUrl } from "@/lib/cms/content";
 
 export async function IntroVideoSection() {
-  const dict = await getDictionary();
+  const [dict, contact, promoVideoUrl] = await Promise.all([getDictionary(), getContactInfo(), getPromoVideoUrl()]);
   const t = dict.introVideo;
   return (
     <div className="intro-video dark-section">
@@ -31,14 +31,14 @@ export async function IntroVideoSection() {
                   <div className="icon-box"><Image src="/images/icon-phone-primary.svg" alt="" width={25} height={25} /></div>
                   <div className="intro-video-contact-item-content">
                     <p>{t.callUs}</p>
-                    <h3><a href={CONTACT_INFO.phone.href}>{CONTACT_INFO.phone.label}</a></h3>
+                    <h3><a href={contact.phone?.href}>{contact.phone?.label}</a></h3>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div className="col-xl-6 col-md-4">
-            <div className="video-play-button intro-video-play-btn"><VideoPopup href={PROMO_VIDEO_URL} data-cursor-text={dict.common.play}><span className="bg-effect"><i className="fa-solid fa-play" /></span></VideoPopup></div>
+            <div className="video-play-button intro-video-play-btn"><VideoPopup href={promoVideoUrl} data-cursor-text={dict.common.play}><span className="bg-effect"><i className="fa-solid fa-play" /></span></VideoPopup></div>
           </div>
         </div>
       </div>

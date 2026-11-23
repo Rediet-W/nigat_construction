@@ -18,13 +18,24 @@ npm run lint       # ESLint
 npm run typecheck  # tsc --noEmit
 ```
 
+### Content (Nigat CMS)
+
+Content comes from the shared Nigat CMS (Strapi, `../nigat_portfolio_cms`), which serves all three Nigat
+sites. `src/lib/cms/content.ts` has one getter per content type (`getServices()`, `getProject(slug)`, …); each
+reads the visitor's language and only this site's sector, and returns the site's own types from `src/types`.
+
+- `CMS_URL` — the CMS address (default `http://localhost:1337`). Start the CMS before `npm run dev`.
+- `REVALIDATE_SECRET` — same value as in the CMS `.env`. Requests are cached and tagged by content type; on
+  publish the CMS calls `POST /api/revalidate` and only that content type is refreshed.
+
+Copy `.env.example` to `.env.local` and fill both in.
+
 ### Forms
 
-The original template posted its forms to a `form-process.php` script that is not part of the project.
-Here the contact/quote forms and the footer newsletter submit through Server Actions
-(`src/features/contact/actions.ts`), which validate input and forward it as JSON to `FORM_WEBHOOK_URL`
-(see `.env.example`). Without that variable the forms still validate, but report that delivery is not
-configured instead of pretending to send.
+The contact/quote forms and the footer newsletter submit through Server Actions
+(`src/features/contact/actions.ts`), which validate input and save it in the CMS: contact and quote forms as
+**Enquiries**, newsletter sign-ups as **Newsletter Subscribers** (signing up twice is harmless). Staff read both
+in the CMS admin panel.
 
 ## Routes
 
@@ -110,7 +121,7 @@ accordion, sliders, lightboxes, counters, skill bars, forms and the global anima
 
 ## Known limitations
 
-- Form delivery needs `FORM_WEBHOOK_URL` (see above).
+- The CMS must be reachable for pages to render and forms to submit (`CMS_URL`).
 - The hero and intro background videos, like the original, stream from the template author's demo CDN
   (`demo.awaikenthemes.com`); host your own files in `public/` for production.
 - Links that were `#` in the template (social profiles, blog pagination) are still placeholders.

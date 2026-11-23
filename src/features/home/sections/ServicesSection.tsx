@@ -2,14 +2,13 @@ import Link from "next/link";
 
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ServiceCard } from "@/features/services/components/ServiceCard";
-import { SERVICES } from "@/constants/services";
 import { wowDelay } from "@/lib/animation";
 import { ROUTES } from "@/constants/routes";
-import { localize } from "@/i18n/localize";
 import { getDictionary } from "@/i18n/server";
+import { getServices } from "@/lib/cms/content";
 
 export async function ServicesSection() {
-  const dict = await getDictionary();
+  const [dict, services] = await Promise.all([getDictionary(), getServices()]);
   const t = dict.services;
   return (
     <div className="our-services dark-section">
@@ -31,7 +30,7 @@ export async function ServicesSection() {
           </div>
         </div>
         <div className="row">
-          {localize(SERVICES.slice(0, 4), dict.content.services).map((service, index) => (
+          {services.slice(0, 4).map((service, index) => (
             <div className="col-xl-3 col-md-6" key={service.id}>
               <ServiceCard service={service} delay={wowDelay(index)} />
             </div>

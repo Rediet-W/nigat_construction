@@ -2,15 +2,14 @@ import Link from "next/link";
 
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { TeamCard } from "@/features/team/components/TeamCard";
-import { TEAM_MEMBERS } from "@/constants/team";
 import { wowDelay } from "@/lib/animation";
 import { ROUTES } from "@/constants/routes";
-import { localize } from "@/i18n/localize";
 import { getDictionary } from "@/i18n/server";
+import { getTeamMembers } from "@/lib/cms/content";
 
 /** `className` adds the page-specific modifier class the template uses on some pages. */
 export async function TeamSection({ className }: { className?: string }) {
-  const dict = await getDictionary();
+  const [dict, team] = await Promise.all([getDictionary(), getTeamMembers()]);
   const t = dict.team;
   return (
     <div className={className ? `our-team ${className}` : "our-team"}>
@@ -32,7 +31,7 @@ export async function TeamSection({ className }: { className?: string }) {
           </div>
         </div>
         <div className="row">
-          {localize(TEAM_MEMBERS.slice(0, 4), dict.content.team).map((member, index) => (
+          {team.slice(0, 4).map((member, index) => (
             <div className="col-xl-3 col-md-6" key={member.id}>
               <TeamCard member={member} delay={wowDelay(index)} />
             </div>

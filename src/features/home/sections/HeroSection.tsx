@@ -5,9 +5,9 @@ import { BackgroundVideo } from "@/components/ui/BackgroundVideo";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { VideoPopup } from "@/components/ui/VideoPopup";
 import { ROUTES } from "@/constants/routes";
-import { PROMO_VIDEO_URL } from "@/constants/site";
 import { HeroImageSlider } from "@/features/home/components/HeroImageSlider";
 import { getDictionary } from "@/i18n/server";
+import { getPromoVideoUrl } from "@/lib/cms/content";
 
 export type HeroVariant = "image" | "slider" | "video";
 
@@ -26,7 +26,7 @@ export async function HeroSection({
 }: {
   variant?: HeroVariant;
 }) {
-  const dict = await getDictionary();
+  const [dict, promoVideoUrl] = await Promise.all([getDictionary(), getPromoVideoUrl()]);
   const t = dict.hero;
   return (
     <div className={HERO_CLASS[variant]}>
@@ -60,7 +60,7 @@ export async function HeroSection({
                 </div>
                 <div className="video-play-button">
                   <VideoPopup
-                    href={PROMO_VIDEO_URL}
+                    href={promoVideoUrl}
                     data-cursor-text={dict.common.play}
                   >
                     <span className="bg-effect">
