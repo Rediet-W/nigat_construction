@@ -4,10 +4,12 @@ import Link from "next/link";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ROUTES } from "@/constants/routes";
 import { getDictionary } from "@/i18n/server";
+import { getAboutPage } from "@/lib/cms/content";
 
 export async function ApproachSection() {
-  const dict = await getDictionary();
+  const [dict, about] = await Promise.all([getDictionary(), getAboutPage()]);
   const t = dict.approach;
+  const story = about?.topics?.[0];
   return (
     <div className="our-approach light-section">
       <div className="container">
@@ -31,21 +33,21 @@ export async function ApproachSection() {
                 <div className="icon-box"><Image src="/images/icon-approach-item-1.svg" alt="" width={50} height={50} /></div>
                 <div className="approach-item-content">
                   <h3>{t.mission}</h3>
-                  <p>{t.missionText}</p>
+                  <p>{about?.mission ?? t.missionText}</p>
                 </div>
               </div>
               <div className="approach-item wow fadeInUp" data-wow-delay="0.2s">
                 <div className="icon-box"><Image src="/images/icon-approach-item-2.svg" alt="" width={50} height={50} /></div>
                 <div className="approach-item-content">
                   <h3>{t.vision}</h3>
-                  <p>{t.visionText}</p>
+                  <p>{about?.vision ?? t.visionText}</p>
                 </div>
               </div>
               <div className="approach-item wow fadeInUp" data-wow-delay="0.4s">
                 <div className="icon-box"><Image src="/images/icon-approach-item-3.svg" alt="" width={50} height={50} /></div>
                 <div className="approach-item-content">
-                  <h3>{t.story}</h3>
-                  <p>{t.storyText}</p>
+                  <h3>{story?.title ?? t.story}</h3>
+                  <p>{story?.description ?? t.storyText}</p>
                 </div>
               </div>
             </div>

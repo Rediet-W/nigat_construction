@@ -1,16 +1,26 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Counter } from "@/components/ui/Counter";
 import { VideoPopup } from "@/components/ui/VideoPopup";
 import { SectionTitle } from "@/components/ui/SectionTitle";
+import { StatValue } from "@/components/ui/StatValue";
 import { ROUTES } from "@/constants/routes";
 import { getDictionary } from "@/i18n/server";
-import { getPromoVideoUrl } from "@/lib/cms/content";
+import { getAboutPage, getCompanyStats, getPromoVideoUrl } from "@/lib/cms/content";
 
 export async function AboutUsSection() {
-  const [dict, promoVideoUrl] = await Promise.all([getDictionary(), getPromoVideoUrl()]);
+  const [dict, promoVideoUrl, about, stats] = await Promise.all([
+    getDictionary(),
+    getPromoVideoUrl(),
+    getAboutPage(),
+    getCompanyStats(),
+  ]);
   const t = dict.about;
+  /** The about page's "- " list items, shown as the section's bullet points. */
+  const points = (about?.body ?? "")
+    .split("\n")
+    .map((line) => line.match(/^\s*[-*]\s+(.+)$/)?.[1])
+    .filter((point): point is string => Boolean(point));
   return (
     <div className="about-us">
       <div className="container">
@@ -38,7 +48,7 @@ export async function AboutUsSection() {
                   </div>
                   <div className="about-us-cta-content">
                     <h2>
-                      <Counter value="8" />+
+                      <StatValue stat={stats[0]} />
                     </h2>
                     <p>{t.yearsText}</p>
                   </div>
@@ -68,13 +78,16 @@ export async function AboutUsSection() {
             <div className="about-us-content">
               <SectionTitle
                 subtitle={t.subtitle}
-                title={t.title}
-                description={t.description}
+                title={about?.introTitle ?? t.title}
+                description={about?.introLead ?? t.description}
               >
-                <ul className="wow fadeInUp" data-wow-delay="0.4s">
-                  <li>{t.point1}</li>
-                  <li>{t.point2}</li>
-                </ul>
+                {points.length > 0 && (
+                  <ul className="wow fadeInUp" data-wow-delay="0.4s">
+                    {points.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                )}
               </SectionTitle>
               <div className="about-us-items-list wow fadeInUp">
                 <div className="about-us-item">
@@ -89,7 +102,7 @@ export async function AboutUsSection() {
                     </div>
                     <div className="about-us-item-counter">
                       <h2>
-                        <Counter value="6" />+
+                        <StatValue stat={stats[1]} />
                       </h2>
                     </div>
                   </div>

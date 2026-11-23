@@ -1,14 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Counter } from "@/components/ui/Counter";
+import { StatValue } from "@/components/ui/StatValue";
 import { ROUTES } from "@/constants/routes";
 import { getDictionary } from "@/i18n/server";
+import { getAboutPage, getCompanyStats } from "@/lib/cms/content";
 
 /** `className` adds the page-specific modifier class the template uses on some pages. */
 export async function ExpertiseSection({ className }: { className?: string }) {
-  const dict = await getDictionary();
+  const [dict, about, stats] = await Promise.all([getDictionary(), getAboutPage(), getCompanyStats()]);
   const t = dict.expertise;
+  // About-page topics: 0 is "Our Story" (Approach section); 1-3 are the three expertise items.
+  const [, discover, professionals, onTime] = about?.topics ?? [];
   return (
     <div className={className ? `our-expertise ${className}` : "our-expertise"}>
       <div className="container">
@@ -37,8 +40,8 @@ export async function ExpertiseSection({ className }: { className?: string }) {
                     />
                   </div>
                   <div className="expertise-item-content">
-                    <h3>{t.discover}</h3>
-                    <p>{t.discoverText}</p>
+                    <h3>{discover?.title ?? t.discover}</h3>
+                    <p>{discover?.description ?? t.discoverText}</p>
                   </div>
                   <div className="expertise-item-btn">
                     <Link href={ROUTES.contact} className="readmore-btn">
@@ -72,8 +75,8 @@ export async function ExpertiseSection({ className }: { className?: string }) {
                       />
                     </div>
                     <div className="expertise-item-content">
-                      <h3>{t.professionals}</h3>
-                      <p>{t.professionalsText}</p>
+                      <h3>{professionals?.title ?? t.professionals}</h3>
+                      <p>{professionals?.description ?? t.professionalsText}</p>
                     </div>
                   </div>
                 </div>
@@ -91,14 +94,14 @@ export async function ExpertiseSection({ className }: { className?: string }) {
                       />
                     </div>
                     <div className="expertise-info-content">
-                      <h3>{t.onTime}</h3>
-                      <p>{t.onTimeText}</p>
+                      <h3>{onTime?.title ?? t.onTime}</h3>
+                      <p>{onTime?.description ?? t.onTimeText}</p>
                     </div>
                   </div>
                   <div className="expertise-info-counter-list">
                     <div className="expertise-counter-item">
                       <h2>
-                        <Counter value="8" />+
+                        <StatValue stat={stats[0]} />
                       </h2>
                       <p>{t.years}</p>
                     </div>

@@ -1,11 +1,20 @@
 import Image from "next/image";
 
-import { Counter } from "@/components/ui/Counter";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { getDictionary } from "@/i18n/server";
+import { wowDelay } from "@/lib/animation";
+import { getHomePage } from "@/lib/cms/content";
+
+const ICONS = [
+  "/images/icon-why-choose-us-item-1.svg",
+  "/images/icon-why-choose-us-item-2.svg",
+  "/images/icon-why-choose-us-item-3.svg",
+] as const;
 
 export async function WhyChooseUsSection() {
-  const t = (await getDictionary()).whyChooseUs;
+  const [dict, home] = await Promise.all([getDictionary(), getHomePage()]);
+  const t = dict.whyChooseUs;
+  const items = home?.highlights ?? [];
   return (
     <div className="why-choose-us">
       <div className="container">
@@ -18,72 +27,19 @@ export async function WhyChooseUsSection() {
                   title={t.title}
                 />
                 <div className="why-choose-item-list">
-                  <div className="why-choose-item wow fadeInUp">
-                    <div className="why-choose-item-header">
-                      <div className="icon-box">
-                        <Image
-                          src="/images/icon-why-choose-us-item-1.svg"
-                          alt=""
-                          width={60}
-                          height={60}
-                        />
-                      </div>
-                      <div className="why-choose-item-content">
-                        <h3>{t.innovation}</h3>
-                        <p>{t.itemText}</p>
+                  {items.map((item, index) => (
+                    <div className="why-choose-item wow fadeInUp" data-wow-delay={wowDelay(index)} key={item.title}>
+                      <div className="why-choose-item-header">
+                        <div className="icon-box">
+                          <Image src={ICONS[index % ICONS.length]} alt="" width={60} height={60} />
+                        </div>
+                        <div className="why-choose-item-content">
+                          <h3>{item.title}</h3>
+                          {item.description && <p>{item.description}</p>}
+                        </div>
                       </div>
                     </div>
-                    {/* <div className="why-choose-item-counter">
-                      <h2><Counter value="500" />+</h2>
-                      <p>Project Completed</p>
-                    </div> */}
-                  </div>
-                  <div
-                    className="why-choose-item wow fadeInUp"
-                    data-wow-delay="0.2s"
-                  >
-                    <div className="why-choose-item-header">
-                      <div className="icon-box">
-                        <Image
-                          src="/images/icon-why-choose-us-item-2.svg"
-                          alt=""
-                          width={60}
-                          height={60}
-                        />
-                      </div>
-                      <div className="why-choose-item-content">
-                        <h3>{t.quality}</h3>
-                        <p>{t.itemText}</p>
-                      </div>
-                    </div>
-                    {/* <div className="why-choose-item-counter">
-                      <h2><Counter value="350" />+</h2>
-                      <p>Satisfied Clients</p>
-                    </div> */}
-                  </div>
-                  <div
-                    className="why-choose-item wow fadeInUp"
-                    data-wow-delay="0.4s"
-                  >
-                    <div className="why-choose-item-header">
-                      <div className="icon-box">
-                        <Image
-                          src="/images/icon-why-choose-us-item-3.svg"
-                          alt=""
-                          width={60}
-                          height={60}
-                        />
-                      </div>
-                      <div className="why-choose-item-content">
-                        <h3>{t.expertise}</h3>
-                        <p>{t.itemText}</p>
-                      </div>
-                    </div>
-                    {/* <div className="why-choose-item-counter">
-                      <h2><Counter value="100" />%</h2>
-                      <p>Safety Commitment</p>
-                    </div> */}
-                  </div>
+                  ))}
                 </div>
               </div>
               <div

@@ -132,6 +132,26 @@ export const getHomePage = cache(async () =>
   }),
 );
 
+export interface Stat {
+  /** Number for <Counter> ("8", "4.9"). */
+  value: string;
+  /** What follows the number ("+", "%", "k+"). */
+  suffix: string;
+  label: string;
+}
+
+/** "8+" -> { value: "8", suffix: "+" }; a value without a leading number is shown as-is. */
+const toStat = (s: { value: string; label: string }): Stat => {
+  const m = s.value.trim().match(/^(\d+(?:\.\d+)?)(.*)$/);
+  return m ? { value: m[1], suffix: m[2].trim(), label: s.label } : { value: "", suffix: s.value, label: s.label };
+};
+
+/**
+ * The company's headline numbers (years, projects, engineers), edited once on the CMS about page
+ * and shown by every counter on the site.
+ */
+export const getCompanyStats = cache(async (): Promise<Stat[]> => ((await getAboutPage())?.stats ?? []).map(toStat));
+
 export const getAboutPage = cache(async () =>
   getOne<CmsAboutPage>("about-pages", "about-page", {
     locale: await getLocale(),

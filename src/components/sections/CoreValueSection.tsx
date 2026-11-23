@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Counter } from "@/components/ui/Counter";
 import { SectionTitle } from "@/components/ui/SectionTitle";
+import { StatValue } from "@/components/ui/StatValue";
 import { ROUTES } from "@/constants/routes";
 import { getDictionary } from "@/i18n/server";
+import { getCompanyStats } from "@/lib/cms/content";
 
 export async function CoreValueSection() {
-  const dict = await getDictionary();
+  const [dict, stats] = await Promise.all([getDictionary(), getCompanyStats()]);
   const t = dict.coreValues;
   return (
     <div className="our-core-value">
@@ -21,24 +22,14 @@ export async function CoreValueSection() {
                 description={t.description}
               />
               <div className="core-value-counter-list wow fadeInUp">
-                <div className="core-value-counter-item">
-                  <h2>
-                    <Counter value="8" />+
-                  </h2>
-                  <p>{t.years}</p>
-                </div>
-                <div className="core-value-counter-item">
-                  <h2>
-                    <Counter value="6" />+
-                  </h2>
-                  <p>{t.projects}</p>
-                </div>
-                <div className="core-value-counter-item">
-                  <h2>
-                    <Counter value="20" />+
-                  </h2>
-                  <p>{t.engineers}</p>
-                </div>
+                {stats.map((stat) => (
+                  <div className="core-value-counter-item" key={stat.label}>
+                    <h2>
+                      <StatValue stat={stat} />
+                    </h2>
+                    <p>{stat.label}</p>
+                  </div>
+                ))}
               </div>
               <div
                 className="core-value-btn wow fadeInUp"

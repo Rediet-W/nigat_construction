@@ -7,7 +7,7 @@ import { VideoPopup } from "@/components/ui/VideoPopup";
 import { ROUTES } from "@/constants/routes";
 import { HeroImageSlider } from "@/features/home/components/HeroImageSlider";
 import { getDictionary } from "@/i18n/server";
-import { getPromoVideoUrl } from "@/lib/cms/content";
+import { getHomePage, getPromoVideoUrl, getSiteSetting, mediaUrl } from "@/lib/cms/content";
 
 export type HeroVariant = "image" | "slider" | "video";
 
@@ -26,11 +26,24 @@ export async function HeroSection({
 }: {
   variant?: HeroVariant;
 }) {
-  const [dict, promoVideoUrl] = await Promise.all([getDictionary(), getPromoVideoUrl()]);
+  const [dict, promoVideoUrl, home, site] = await Promise.all([
+    getDictionary(),
+    getPromoVideoUrl(),
+    getHomePage(),
+    getSiteSetting(),
+  ]);
   const t = dict.hero;
+  const slides = (home?.heroSlides ?? [])
+    .filter((slide) => slide.image)
+    .map((slide) => ({
+      src: mediaUrl(slide.image),
+      width: slide.image?.width ?? 1920,
+      height: slide.image?.height ?? 1280,
+      alt: slide.label ?? "",
+    }));
   return (
     <div className={HERO_CLASS[variant]}>
-      {variant === "slider" && <HeroImageSlider />}
+      {variant === "slider" && <HeroImageSlider slides={slides} />}
       {variant === "video" && (
         <div className="hero-bg-video">
           <BackgroundVideo id="myvideo" src={HERO_VIDEO_URL} />
@@ -41,10 +54,10 @@ export async function HeroSection({
           <div className="col-xl-7">
             <div className="hero-content">
               <SectionTitle
-                subtitle={t.subtitle}
+                subtitle={home?.heroBadge ?? t.subtitle}
                 as="h1"
-                title={t.title}
-                description={dict.meta.description}
+                title={home?.heroTitle ?? t.title}
+                description={site?.description ?? dict.meta.description}
               />
               <div
                 className="hero-content-body wow fadeInUp"
@@ -52,10 +65,10 @@ export async function HeroSection({
               >
                 <div className="hero-btn">
                   <Link
-                    href={ROUTES.contact}
+                    href={home?.primaryCta?.href ?? ROUTES.contact}
                     className="btn-default btn-highlighted"
                   >
-                    {t.getStarted}
+                    {home?.primaryCta?.label ?? t.getStarted}
                   </Link>
                 </div>
                 <div className="video-play-button">
@@ -66,7 +79,7 @@ export async function HeroSection({
                     <span className="bg-effect">
                       <i className="fa-solid fa-play" />
                     </span>
-                    <p>{t.exploreVideo}</p>
+                    <p>{home?.secondaryCta?.label ?? t.exploreVideo}</p>
                   </VideoPopup>
                 </div>
               </div>
@@ -125,7 +138,7 @@ export async function HeroSection({
                   </div>
                 </div>
                 <div className="satisfy-client-content">
-                  <p>{t.yearsBadge}</p>
+                  <p>{home?.heroSubtitle ?? t.yearsBadge}</p>
                 </div>
               </div>
               {/* <div className="quality-construction-circle wow fadeInUp" data-wow-delay="0.2s"><Image src="/images/quality-construction-circle.svg" alt="" width={137} height={137} /></div> */}

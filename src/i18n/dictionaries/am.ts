@@ -1,6 +1,5 @@
 import type { Dictionary } from "@/i18n/dictionaries/en";
 
-const ITEM_TEXT = "ቀላል ተግባር ለውጥ ያመጣል። ይህም የሚጀምረው እና የሚያበቃው በእያንዳንዱ ሠራተኛ ትጋት ነው።";
 const PRECISION_TEXT = "እያንዳንዱ ፕሮጀክት በትክክለኛነት፣ ለዝርዝር ጉዳዮች በሚሰጥ ትኩረት እና በከፍተኛ የግንባታ ደረጃዎች ይጠናቀቃል።";
 const UNDERSTANDING_TEXT =
   "ግቦችዎን፣ በጀትዎን፣ የጊዜ ሰሌዳዎን እና የፕሮጀክት መስፈርቶችዎን በመረዳት እንጀምራለን። ባለሙያዎቻችን የሳይት ጥናት ያካሂዳሉ።";
@@ -133,8 +132,6 @@ export const am: Dictionary = {
     title: "አስተማማኝ ግንባታዎችን በጥራት እና በትክክለኛነት እንገነባለን",
     description:
       "በትክክለኛነት፣ በግልጽነት እና ልዩ እና ዘላቂ ውጤት ለማቅረብ ባለን ፍላጎት እየተመራን ለደንበኞች ፍላጎት የተዘጋጁ ሁሉን አቀፍ የግንባታ መፍትሄዎችን እናቀርባለን።",
-    point1: "ጥራት ያላቸውን ቦታዎች በእምነት እና በትክክለኛነት እንገነባለን።",
-    point2: "ከፍተኛ ጥራት ያላቸውን የመኖሪያ እና የንግድ ፕሮጀክቶች እናቀርባለን።",
     projectsDelivered: "በትክክለኛነት የተጠናቀቁ ጥራት ያላቸው ፕሮጀክቶች",
     moreAbout: "ስለ እኛ ተጨማሪ",
     authorName: "ማይክል አንደርሰን",
@@ -192,10 +189,6 @@ export const am: Dictionary = {
   whyChooseUs: {
     subtitle: "ለምን እኛን ይመርጣሉ",
     title: "የግንባታ አገልግሎታችንን የሚገልጽ ልህቀት",
-    innovation: "ፈጠራ የተሞላባቸው መፍትሄዎች",
-    quality: "ጥራት ያለው ሥራ",
-    expertise: "ሙያ እና ልምድ",
-    itemText: ITEM_TEXT,
   },
   projects: {
     subtitle: "ፕሮጀክቶቻችን",
@@ -290,10 +283,6 @@ export const am: Dictionary = {
     trustSubtitle: "የሰዎች እምነት",
     trustTitle: "በጥራት እና በአስተማማኝነት የምንመራ",
     trustDescription: "በሰለጠኑ ባለሙያዎች እና ለልህቀት ባለን ቁርጠኝነት አስተማማኝ የግንባታ መፍትሄዎችን እናቀርባለን።",
-    workmanship: "የላቀ የሥራ ጥራት",
-    pricing: "ግልጽ የዋጋ አወሳሰን",
-    satisfaction: "የደንበኛ እርካታ",
-    itemText: "ለረጅም ጊዜ የሚቆዩ ጠንካራ ግንባታዎችን የሚያረጋግጥ ጥራት ያለው ሥራ",
   },
   blog: {
     subtitle: "የቅርብ ጊዜ ዜናዎች",

@@ -3,10 +3,19 @@ import Image from "next/image";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { ContactForm, FormField, FormSubmit } from "@/features/contact/components/ContactForm";
 import { getDictionary } from "@/i18n/server";
+import { wowDelay } from "@/lib/animation";
+import { getAboutPage } from "@/lib/cms/content";
+
+const ICONS = [
+  "/images/icon-cta-box-item-1.svg",
+  "/images/icon-cta-box-item-2.svg",
+  "/images/icon-cta-box-item-3.svg",
+] as const;
 
 /** `className` adds the page-specific modifier class the template uses on some pages. */
 export async function CtaSection({ className }: { className?: string }) {
-  const { cta: t, form: f } = await getDictionary();
+  const [{ cta: t, form: f }, about] = await Promise.all([getDictionary(), getAboutPage()]);
+  const principles = about?.principles ?? [];
   return (
     <div className={className ? `cta-section ${className}` : "cta-section"}>
       <div className="container">
@@ -43,27 +52,15 @@ export async function CtaSection({ className }: { className?: string }) {
                   />
                 </div>
                 <div className="cta-box-item-list">
-                  <div className="cta-box-item wow fadeInUp">
-                    <div className="icon-box"><Image src="/images/icon-cta-box-item-1.svg" alt="" width={60} height={60} /></div>
-                    <div className="cta-box-item-content">
-                      <h3>{t.workmanship}</h3>
-                      <p>{t.itemText}</p>
+                  {principles.map((item, index) => (
+                    <div className="cta-box-item wow fadeInUp" data-wow-delay={wowDelay(index)} key={item.title}>
+                      <div className="icon-box"><Image src={ICONS[index % ICONS.length]} alt="" width={60} height={60} /></div>
+                      <div className="cta-box-item-content">
+                        <h3>{item.title}</h3>
+                        {item.description && <p>{item.description}</p>}
+                      </div>
                     </div>
-                  </div>
-                  <div className="cta-box-item wow fadeInUp" data-wow-delay="0.2s">
-                    <div className="icon-box"><Image src="/images/icon-cta-box-item-2.svg" alt="" width={60} height={60} /></div>
-                    <div className="cta-box-item-content">
-                      <h3>{t.pricing}</h3>
-                      <p>{t.itemText}</p>
-                    </div>
-                  </div>
-                  <div className="cta-box-item wow fadeInUp" data-wow-delay="0.4s">
-                    <div className="icon-box"><Image src="/images/icon-cta-box-item-3.svg" alt="" width={60} height={60} /></div>
-                    <div className="cta-box-item-content">
-                      <h3>{t.satisfaction}</h3>
-                      <p>{t.itemText}</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>

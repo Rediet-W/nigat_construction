@@ -143,8 +143,6 @@ export const en = {
     title: "Building reliable structures with quality and precision",
     description:
       "Offering comprehensive construction solutions tailored to client needs, driven by precision, transparency & a passion for delivering exceptional & lasting results",
-    point1: "Building quality spaces with trust and precision.",
-    point2: "Delivering high quality residential and commercial projects.",
     projectsDelivered: "Quality Projects Delivered with Precision",
     moreAbout: "More About Us",
     authorName: "Michael Anderson",
@@ -207,10 +205,6 @@ export const en = {
   whyChooseUs: {
     subtitle: "Why Choose Us",
     title: "Excellence that defines our construction services",
-    innovation: "Innovation Solutions",
-    quality: "Quality Workmanship",
-    expertise: "Expertise & Experience",
-    itemText: "Simple action make difference. It starts & ends with each employee striving to work",
   },
   projects: {
     subtitle: "Our Projects",
@@ -307,10 +301,6 @@ export const en = {
     trustSubtitle: "People trust",
     trustTitle: "Driven by Quality and Reliability",
     trustDescription: "We deliver reliable construction solution skilled professionals and to excellence.",
-    workmanship: "Premium Workmanship",
-    pricing: "Transparent Pricing",
-    satisfaction: "Customer Satisfaction",
-    itemText: "Quality craftsmanship that ensures durable, lasting structures built to stand the test of time",
   },
   blog: {
     subtitle: "Latest News",
