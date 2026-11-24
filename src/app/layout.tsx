@@ -12,6 +12,7 @@ import { BackToTop } from "@/components/ui/BackToTop";
 import { SITE } from "@/constants/site";
 import { I18nProvider } from "@/i18n/I18nProvider";
 import { getDictionary, getLocale } from "@/i18n/server";
+import { getLogoUrl } from "@/lib/cms/content";
 
 import "./globals.css";
 
@@ -47,7 +48,7 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
-  const [locale, dict] = await Promise.all([getLocale(), getDictionary()]);
+  const [locale, dict, logoUrl] = await Promise.all([getLocale(), getDictionary(), getLogoUrl()]);
   return (
     <html lang={locale} className={`${inter.variable} ${ethiopic.variable}`} suppressHydrationWarning>
       <head>
@@ -56,7 +57,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       </head>
       <body>
         <I18nProvider locale={locale} dict={dict}>
-          <Preloader />
+          <Preloader logoUrl={logoUrl} />
           <Header />
           <main>{children}</main>
           <Footer />

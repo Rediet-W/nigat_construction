@@ -3,6 +3,7 @@ import "server-only";
 import { cache } from "react";
 
 import { detailRoute } from "@/constants/routes";
+import { SITE } from "@/constants/site";
 import { getLocale } from "@/i18n/server";
 import { CMS_SECTOR, CMS_URL, cmsGet, type Query } from "@/lib/cms/client";
 import type {
@@ -59,6 +60,16 @@ export const getSiteSetting = cache(async () =>
     populate: { logo: MEDIA, logoDark: MEDIA, contact: true, socialLinks: true, seo: true },
   }),
 );
+
+/**
+ * Site logo from the CMS site settings ("Logo"; "Logo Dark" for dark backgrounds when set),
+ * falling back to the bundled logo so the header never renders empty.
+ */
+export const getLogoUrl = cache(async (variant: "default" | "dark" = "default"): Promise<string> => {
+  const site = await getSiteSetting();
+  const logo = variant === "dark" ? (site?.logoDark ?? site?.logo) : site?.logo;
+  return mediaUrl(logo, SITE.logo);
+});
 
 /** "0995888882" -> "tel:+251995888882" (Ethiopian local numbers drop the leading 0). */
 function telHref(phone: string): string {

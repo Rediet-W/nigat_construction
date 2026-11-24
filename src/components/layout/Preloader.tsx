@@ -3,12 +3,10 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import { SITE } from "@/constants/site";
-
 const FADE_MS = 600;
 
-/** Full-screen loader shown on first page load; fades out once the window has loaded. */
-export function Preloader() {
+/** Full-screen loader shown on first page load; fades out once the window has loaded. `logoUrl`: CMS site logo. */
+export function Preloader({ logoUrl }: { logoUrl: string }) {
   const [state, setState] = useState<"visible" | "fading" | "hidden">("visible");
 
   useEffect(() => {
@@ -39,7 +37,7 @@ export function Preloader() {
       <div className="loading-container">
         <div className="loading" />
         <div id="loading-icon">
-          <Image src={SITE.logo} alt="" width={66} height={41} preload />
+          <Image src={logoUrl} alt="" width={66} height={41} preload />
         </div>
       </div>
     </div>

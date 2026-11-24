@@ -54,7 +54,7 @@ export async function Footer() {
           <div className="col-lg-12">
             <div className="footer-header">
               <div className="footer-logo">
-                <SiteLogo />
+                <SiteLogo variant="dark" />
               </div>
               <div className="footer-social-links">
                 <ul>
