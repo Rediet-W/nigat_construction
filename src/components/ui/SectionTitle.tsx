@@ -17,9 +17,7 @@ export function SectionTitle({ subtitle, title, as: Heading = "h2", description,
   return (
     <div className={center ? "section-title section-title-center" : "section-title"}>
       {subtitle && <span className="section-sub-title wow fadeInUp">{subtitle}</span>}
-      <Heading className="text-anime-style-3" data-cursor="-opaque">
-        {title}
-      </Heading>
+      <Heading className="text-anime-style-3">{title}</Heading>
       {description && (
         <p className="wow fadeInUp" data-wow-delay="0.2s">
           {description}

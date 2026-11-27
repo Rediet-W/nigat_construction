@@ -60,23 +60,23 @@ html.js .text-anime-style-3:not(.is-split) {
   color: var(--white-color);
 }
 
-/* Back-to-top button (components/ui/BackToTop.tsx): bottom-right, as users expect. */
+/* Back-to-top button (components/ui/BackToTop.tsx): bottom-right, small, clear of card text. */
 .back-to-top {
   position: fixed;
-  right: 30px;
-  bottom: 30px;
+  right: 24px;
+  bottom: 24px;
   z-index: 999;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
+  width: 42px;
+  height: 42px;
   padding: 0;
   border: none;
   border-radius: 50%;
   background: var(--accent-color);
   color: var(--primary-color);
-  font-size: 18px;
+  font-size: 15px;
   box-shadow: 0 6px 20px rgba(18, 34, 59, 0.25);
   cursor: pointer;
   opacity: 0;
@@ -104,11 +104,11 @@ html.js .text-anime-style-3:not(.is-split) {
 
 @media (max-width: 767px) {
   .back-to-top {
-    right: 16px;
-    bottom: 16px;
-    width: 44px;
-    height: 44px;
-    font-size: 16px;
+    right: 14px;
+    bottom: 14px;
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
   }
 }
 
@@ -190,9 +190,30 @@ html.js .text-anime-style-3:not(.is-split) {
  * own menu/footer styles; these rules only size and arrange the new pieces.
  */
 
-/* Header switcher: a `.submenu` item, so hover/focus opening is the template's. */
+/*
+ * Header switcher: a `.submenu` item, so hover/focus opening is the template's.
+ * `.is-open` (set on click/tap by GroupSwitcher.tsx) opens it on touch screens.
+ */
 .main-menu .group-switcher > li {
   margin: 0 10px 0 0;
+}
+
+.main-menu .group-switcher > li.is-open > ul {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1, 1);
+  padding: 5px 0;
+}
+
+/* Touch screens have no real hover: only the tap state decides, so a second tap closes it. */
+@media (hover: none) {
+  .main-menu .group-switcher > li:not(.is-open):hover > ul,
+  .main-menu .group-switcher > li:not(.is-open):focus-within > ul {
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(1, 0.8);
+    padding: 0;
+  }
 }
 
 .main-menu .group-switcher-toggle {

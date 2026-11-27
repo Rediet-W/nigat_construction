@@ -3,8 +3,9 @@
 import { useEffect, useRef } from "react";
 
 interface BackgroundVideoProps {
-  id?: string;
   src: string;
+  /** Still frame shown while the video loads, or instead of it on slow connections. */
+  poster?: string;
 }
 
 /**
@@ -12,7 +13,7 @@ interface BackgroundVideoProps {
  * attribute during SSR, so it is enforced on mount before calling play()
  * to keep browser autoplay policies satisfied.
  */
-export function BackgroundVideo({ id, src }: BackgroundVideoProps) {
+export function BackgroundVideo({ src, poster }: BackgroundVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export function BackgroundVideo({ id, src }: BackgroundVideoProps) {
   }, []);
 
   return (
-    <video ref={ref} id={id} autoPlay muted loop playsInline>
+    <video ref={ref} poster={poster} autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
       <source src={src} type="video/mp4" />
     </video>
   );

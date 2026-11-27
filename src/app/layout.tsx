@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Noto_Sans_Ethiopic } from "next/font/google";
 import type { ReactNode } from "react";
 
-import { MagicCursor } from "@/components/effects/MagicCursor";
 import { ScrollAnimations } from "@/components/effects/ScrollAnimations";
 import { SmoothScroll } from "@/components/effects/SmoothScroll";
 import { Footer } from "@/components/layout/Footer";
@@ -33,10 +32,14 @@ const ethiopic = Noto_Sans_Ethiopic({
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getDictionary();
   return {
-    title: { default: SITE.defaultTitle, template: `%s - ${SITE.name}` },
+    metadataBase: new URL(SITE.url),
+    title: { default: SITE.name, template: `%s - ${SITE.name}` },
     description: t.meta.description,
-    authors: [{ name: "AwaikenThemes" }],
+    authors: [{ name: SITE.legalName }],
+    creator: SITE.legalName,
+    publisher: SITE.legalName,
     icons: { icon: "/images/favicon.png" },
+    openGraph: { type: "website", siteName: SITE.name, title: SITE.name, description: t.meta.description },
   };
 }
 
@@ -61,7 +64,6 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           <main>{children}</main>
           <Footer />
           <BackToTop />
-          <MagicCursor />
           <SmoothScroll />
           <ScrollAnimations />
         </I18nProvider>

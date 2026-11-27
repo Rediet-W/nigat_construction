@@ -1,152 +1,100 @@
-import type { Service } from "@/types";
-import { ROUTES } from "@/constants/routes";
+import { MEDIA } from "@/constants/media";
+import type { Service, ServiceCategory } from "@/types";
 
+/**
+ * Every individual service Nigat offers. Shown as tags inside the categories
+ * below, never as separate cards. Amharic titles live in
+ * i18n/dictionaries/am.ts → content.services.
+ */
 export const SERVICES: readonly Service[] = [
+  { id: "gypsum-board-ceiling-partition-works", title: "Gypsum Board Ceiling & Partition Works" },
+  { id: "false-ceiling-decorative-ceiling-systems", title: "False Ceiling & Decorative Ceiling Systems" },
+  { id: "painting-decorative-finishing-works", title: "Painting & Decorative Finishing Works" },
+  { id: "acoustic-renovation-soundproofing-works", title: "Acoustic Renovation & Soundproofing Works" },
+  { id: "reception-areas-feature-walls", title: "Reception Areas & Feature Walls" },
+  { id: "porcelain-ceramic-tile-works", title: "Porcelain & Ceramic Tile Works" },
+  { id: "epoxy-flooring-systems", title: "Epoxy Flooring Systems" },
+  { id: "flooring-solutions", title: "Flooring Solutions" },
+  { id: "wall-cladding-systems", title: "Wall Cladding Systems" },
+  { id: "hollow-concrete-block-wall-construction", title: "Hollow Concrete Block (HCB) Wall Construction" },
+  { id: "custom-furnishing-joinery-works", title: "Custom Furnishing & Joinery Works" },
+  { id: "glass-partition-door-systems", title: "Glass Partition & Door Systems" },
+  { id: "aluminum-doors-windows", title: "Aluminium Doors & Windows" },
+  { id: "metal-installation-works", title: "Metal Installation Works" },
+  { id: "shopfitting-commercial-interior-works", title: "Shopfitting & Commercial Interior Works" },
+  { id: "renovation-refurbishment-services", title: "Renovation & Refurbishment Services" },
+  { id: "electrical-installation-works", title: "Electrical Installation Works" },
+  { id: "plumbing-sanitary-installation-works", title: "Plumbing & Sanitary Installation Works" },
+  { id: "mep-coordination", title: "Mechanical, Electrical & Plumbing (MEP) Coordination" },
+  { id: "design-space-planning-project-management", title: "Design, Space Planning & Project Management" },
+  { id: "landscaping-external-beautification-works", title: "Landscaping & External Beautification Works" },
+];
+
+/**
+ * The headline categories shown on Home and Services, each with its own page
+ * at /services/<id>. CONFIRM WITH NIGAT: the final list of categories.
+ * Amharic text lives in i18n/dictionaries/am.ts → content.categories.
+ */
+export const SERVICE_CATEGORIES: readonly ServiceCategory[] = [
   {
-    id: "gypsum-board-ceiling-partition-works",
-    title: "Gypsum Board Ceiling & Partition Works",
-    description: "Gypsum board ceilings and partitions installed with clean lines and a smooth finish.",
-    image: "/images/service-image-1.jpg",
-    href: ROUTES.serviceDetails
+    id: "interior-finishing",
+    title: "Ceilings & Interior Finishing",
+    summary: "Gypsum and decorative ceilings, partitions, painting and acoustic finishes.",
+    description:
+      "We turn bare structures into finished rooms: gypsum board ceilings and partitions, decorative ceilings, painting and feature walls, and acoustic treatment for offices, meeting rooms and homes.",
+    image: MEDIA.services["interior-finishing"],
+    serviceIds: [
+      "gypsum-board-ceiling-partition-works",
+      "false-ceiling-decorative-ceiling-systems",
+      "painting-decorative-finishing-works",
+      "acoustic-renovation-soundproofing-works",
+      "reception-areas-feature-walls",
+    ],
   },
   {
-    id: "porcelain-ceramic-tile-works",
-    title: "Porcelain & Ceramic Tile Works",
-    description: "Porcelain and ceramic tiling for floors and walls, laid with precision.",
-    image: "/images/service-image-2.jpg",
-    href: ROUTES.serviceDetails
+    id: "floors-and-walls",
+    title: "Floors & Walls",
+    summary: "Porcelain and ceramic tiling, epoxy floors, wall cladding and HCB walls.",
+    description:
+      "Floors and walls take the most wear in any building. We lay porcelain and ceramic tiles, install epoxy and other floor systems, fit interior and exterior wall cladding, and build hollow concrete block walls.",
+    image: MEDIA.services["floors-and-walls"],
+    serviceIds: [
+      "porcelain-ceramic-tile-works",
+      "epoxy-flooring-systems",
+      "flooring-solutions",
+      "wall-cladding-systems",
+      "hollow-concrete-block-wall-construction",
+    ],
   },
   {
-    id: "wall-cladding-systems",
-    title: "Wall Cladding Systems",
-    description: "Interior and exterior wall cladding systems that protect and enhance surfaces.",
-    image: "/images/service-image-3.jpg",
-    href: ROUTES.serviceDetails
+    id: "joinery-glass-metal",
+    title: "Joinery, Glass & Metal",
+    summary: "Custom furniture, glass partitions, aluminium doors and windows, and shopfitting.",
+    description:
+      "Made-to-measure work that fits your space: custom furniture and joinery, glass partitions and doors, aluminium doors and windows, metalwork, and complete shop and office fit-outs.",
+    image: MEDIA.services["joinery-glass-metal"],
+    serviceIds: [
+      "custom-furnishing-joinery-works",
+      "glass-partition-door-systems",
+      "aluminum-doors-windows",
+      "metal-installation-works",
+      "shopfitting-commercial-interior-works",
+    ],
   },
   {
-    id: "custom-furnishing-joinery-works",
-    title: "Custom Furnishing & Joinery Works",
-    description: "Custom furnishing and joinery crafted to fit your space and requirements.",
-    image: "/images/service-image-4.jpg",
-    href: ROUTES.serviceDetails
+    id: "renovation-building-services",
+    title: "Renovation & Building Services",
+    summary: "Renovation, electrical and plumbing works, design and project management.",
+    description:
+      "For larger jobs we manage the whole project: renovation and refurbishment, electrical and plumbing installation, coordination of mechanical, electrical and plumbing trades, space planning, and landscaping outside.",
+    image: MEDIA.services["renovation-building-services"],
+    serviceIds: [
+      "renovation-refurbishment-services",
+      "electrical-installation-works",
+      "plumbing-sanitary-installation-works",
+      "mep-coordination",
+      "design-space-planning-project-management",
+      "landscaping-external-beautification-works",
+    ],
   },
-  {
-    id: "acoustic-renovation-soundproofing-works",
-    title: "Acoustic Renovation & Soundproofing Works",
-    description: "Acoustic renovation and soundproofing for quieter, more comfortable spaces.",
-    image: "/images/service-image-5.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "glass-partition-door-systems",
-    title: "Glass Partition & Door Systems",
-    description: "Glass partitions and door systems for open, modern, light-filled interiors.",
-    image: "/images/service-image-6.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "hollow-concrete-block-wall-construction",
-    title: "Hollow Concrete Block (HCB) Wall Construction",
-    description: "Hollow concrete block (HCB) wall construction built for strength and durability.",
-    image: "/images/service-image-7.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "painting-decorative-finishing-works",
-    title: "Painting & Decorative Finishing Works",
-    description: "Painting and decorative finishing works for a refined, lasting look.",
-    image: "/images/service-image-1.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "metal-installation-works",
-    title: "Metal Installation Works",
-    description: "Metal installation works fabricated and fitted to project specifications.",
-    image: "/images/service-image-2.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "aluminum-doors-windows",
-    title: "Aluminum Doors & Windows",
-    description: "Aluminum doors and windows supplied and installed for a precise fit.",
-    image: "/images/service-image-3.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "epoxy-flooring-systems",
-    title: "Epoxy Flooring Systems",
-    description: "Epoxy flooring systems that deliver seamless, durable, easy-to-clean floors.",
-    image: "/images/service-image-4.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "electrical-installation-works",
-    title: "Electrical Installation Works",
-    description: "Electrical installation works carried out safely and to standard.",
-    image: "/images/service-image-5.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "plumbing-sanitary-installation-works",
-    title: "Plumbing & Sanitary Installation Works",
-    description: "Plumbing and sanitary installation works for reliable water and drainage systems.",
-    image: "/images/service-image-6.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "false-ceiling-decorative-ceiling-systems",
-    title: "False Ceiling & Decorative Ceiling Systems",
-    description: "False and decorative ceiling systems that add character to any interior.",
-    image: "/images/service-image-7.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "flooring-solutions",
-    title: "Flooring Solutions",
-    description: "Flooring solutions selected and installed to suit how each space is used.",
-    image: "/images/service-image-1.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "reception-areas-feature-walls",
-    title: "Reception Areas & Feature Walls",
-    description: "Reception areas and feature walls that make a strong first impression.",
-    image: "/images/service-image-2.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "shopfitting-commercial-interior-works",
-    title: "Shopfitting & Commercial Interior Works",
-    description: "Shopfitting and commercial interior works for retail and business spaces.",
-    image: "/images/service-image-3.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "mep-coordination",
-    title: "Mechanical, Electrical & Plumbing (MEP) Coordination",
-    description: "Mechanical, electrical and plumbing (MEP) coordination across every project stage.",
-    image: "/images/service-image-4.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "renovation-refurbishment-services",
-    title: "Renovation & Refurbishment Services",
-    description: "Renovation and refurbishment services that bring existing spaces up to date.",
-    image: "/images/service-image-5.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "design-space-planning-project-management",
-    title: "Design, Space Planning & Project Management",
-    description: "Design, space planning and project management from concept to completion.",
-    image: "/images/service-image-6.jpg",
-    href: ROUTES.serviceDetails
-  },
-  {
-    id: "landscaping-external-beautification-works",
-    title: "Landscaping & External Beautification Works",
-    description: "Landscaping and external beautification works for attractive outdoor areas.",
-    image: "/images/service-image-7.jpg",
-    href: ROUTES.serviceDetails
-  }
 ];

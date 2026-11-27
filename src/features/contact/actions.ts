@@ -1,32 +1,49 @@
 "use server";
 
-import { getDictionary } from "@/i18n/server";
-import { deliver, field, isEmail, type FormResult } from "@/lib/forms";
+import { SITE } from "@/constants/site";
+import {
+  findEnquiryError,
+  GENERAL_ENQUIRY,
+  HONEYPOT_FIELD,
+  type EnquiryValues,
+} from "@/features/contact/validation";
+import { en } from "@/i18n/dictionaries/en";
+import { localizedCategories } from "@/i18n/localize";
+import { getDictionary, getLocale } from "@/i18n/server";
+import { deliver, field, type FormResult } from "@/lib/forms";
 
-export async function submitContactForm(data: FormData): Promise<FormResult> {
-  const t = (await getDictionary()).form;
-  const payload = {
-    firstName: field(data, "fname"),
-    lastName: field(data, "lname"),
-    email: field(data, "email"),
+export async function submitEnquiry(data: FormData): Promise<FormResult> {
+  const [{ form: t }, locale] = await Promise.all([getDictionary(), getLocale()]);
+
+  // Bots fill every field: pretend success and drop the submission.
+  if (field(data, HONEYPOT_FIELD)) return { ok: true, message: t.sent };
+
+  const values: EnquiryValues = {
+    name: field(data, "name"),
     phone: field(data, "phone"),
+    service: field(data, "service"),
     message: field(data, "message"),
   };
 
-  // Server-side mirror of the client validation (never trust the browser).
-  if (!payload.firstName || !payload.lastName || !payload.phone || !isEmail(payload.email)) {
-    return { ok: false, message: t.requiredFields };
-  }
+  // Server-side mirror of the browser validation (never trust the browser).
+  const error = findEnquiryError(values);
+  if (error) return { ok: false, message: t.errors[error] };
 
-  const result = await deliver("contact", payload, t);
-  return result.ok ? { ok: true, message: t.messageSent } : result;
-}
+  // The team reads every enquiry in English, whichever language the visitor used.
+  const service =
+    localizedCategories(en).find((category) => category.id === values.service)?.title ?? en.form.generalEnquiry;
+  const subject = `${SITE.name} enquiry — ${service}`;
+  const text = [
+    `New website enquiry (${SITE.name})`,
+    `Service: ${service}`,
+    `Name: ${values.name}`,
+    `Phone: ${values.phone}`,
+    `Language: ${locale === "am" ? "Amharic" : "English"}`,
+    "",
+    values.message,
+  ].join("\n");
 
-export async function subscribeNewsletter(data: FormData): Promise<FormResult> {
-  const t = (await getDictionary()).form;
-  const email = field(data, "mail");
-  if (!isEmail(email)) return { ok: false, message: t.invalidEmail };
-
-  const result = await deliver("newsletter", { email }, t);
-  return result.ok ? { ok: true, message: t.subscribed } : result;
+  const status = await deliver(subject, text, { ...values, service: values.service || GENERAL_ENQUIRY, locale });
+  if (status === "sent") return { ok: true, message: t.sent };
+  return { ok: false, message: status === "not_configured" ? t.notConfigured : t.failed };
 }

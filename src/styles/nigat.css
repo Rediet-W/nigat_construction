@@ -1,0 +1,777 @@
+/*
+ * Sections built for Nigat after the website review (Nov 2026). Uses the
+ * template's tokens (custom.css :root) so everything matches the rest of the site.
+ */
+
+/* ---------------------------------------------------------------- General */
+
+/* The template hid the system cursor on headings for its custom cursor, which was removed. */
+.section-title h1,
+.section-title h2 {
+  cursor: auto;
+}
+
+.dark-section .readmore-btn {
+  color: var(--white-color);
+}
+
+/* The template's `.reveal` makes figures inline-flex (shrink-to-fit); these fill their column. */
+.home-intro-image,
+.service-row-image,
+.category-detail-image,
+.about-story-image,
+.mission-vision-image {
+  display: block;
+}
+
+/* ------------------------------------------------------------------- Hero */
+
+.hero {
+  padding-bottom: 160px;
+}
+
+.hero-content-body .hero-secondary-link {
+  color: var(--white-color);
+}
+
+/* ----------------------------------------------------------- Page header */
+
+/* Shorter inner-page banner so each page ends within 3 to 4 scrolls. */
+.page-header {
+  padding: 220px 0 110px;
+}
+
+@media (max-width: 991px) {
+  .page-header {
+    padding: 170px 0 80px;
+  }
+}
+
+.page-header-video .page-header-bg-video {
+  position: absolute;
+  inset: 0;
+}
+
+.page-header-video .page-header-bg-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.page-header-video::before {
+  z-index: 1;
+}
+
+.page-header-intro {
+  max-width: 560px;
+  margin: 20px 0 0;
+  color: var(--white-color);
+  opacity: 0.85;
+}
+
+.page-header-actions {
+  margin-top: 30px;
+}
+
+/* -------------------------------------------------------------- Home intro */
+
+.home-intro-image {
+  margin: 0 15px 0 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.home-intro-image img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.home-intro-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin: 0 0 40px;
+  padding: 30px 0;
+  border-top: 1px solid var(--divider-color);
+  border-bottom: 1px solid var(--divider-color);
+}
+
+.home-intro-stats dt {
+  font-size: 40px;
+  line-height: 1.1em;
+  color: var(--primary-color);
+}
+
+.home-intro-stats dd {
+  margin: 5px 0 0;
+}
+
+/* ------------------------------------------------- Home core services bento */
+
+.service-bento {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-auto-rows: 270px;
+  gap: 20px;
+  padding-bottom: 50px;
+}
+
+.service-bento-card {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  border-radius: 8px;
+  overflow: hidden;
+  color: var(--white-color);
+  isolation: isolate;
+}
+
+/* First category: large, spanning two rows. */
+.service-bento-card:first-child {
+  grid-row: span 2;
+}
+
+/* Last category: wide, under the two small ones. */
+.service-bento-card:last-child:nth-child(4) {
+  grid-column: span 2;
+}
+
+.service-bento-card img {
+  z-index: -2;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.service-bento-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(18, 34, 59, 0) 35%, rgba(18, 34, 59, 0.9) 100%);
+}
+
+.service-bento-card:hover img,
+.service-bento-card:focus-visible img {
+  transform: scale(1.05);
+}
+
+.service-bento-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 25px 80px 25px 25px;
+}
+
+.service-bento-title {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2em;
+}
+
+.service-bento-card:first-child .service-bento-title {
+  font-size: 30px;
+}
+
+.service-bento-summary {
+  font-size: 15px;
+  line-height: 1.5em;
+  opacity: 0.85;
+}
+
+.service-bento-arrow {
+  position: absolute;
+  right: 25px;
+  bottom: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  transition: transform 0.3s ease;
+}
+
+.service-bento-card:hover .service-bento-arrow,
+.service-bento-card:focus-visible .service-bento-arrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 991px) {
+  .service-bento {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 240px;
+  }
+
+  .service-bento-card:first-child,
+  .service-bento-card:last-child:nth-child(4) {
+    grid-column: span 2;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 575px) {
+  .service-bento {
+    grid-template-columns: 1fr;
+  }
+
+  .service-bento-card:first-child,
+  .service-bento-card:last-child:nth-child(4) {
+    grid-column: auto;
+  }
+
+  .service-bento-card:first-child .service-bento-title {
+    font-size: 22px;
+  }
+}
+
+/* ------------------------------------------------ Services page categories */
+
+.service-row {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: center;
+  gap: 50px;
+  margin-bottom: 60px;
+}
+
+.service-row-reverse {
+  grid-template-columns: 1.1fr 0.9fr;
+}
+
+.service-row-reverse .service-row-image {
+  order: 2;
+}
+
+.service-row-image {
+  margin: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.service-row-image img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.service-row-number {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent-color);
+  margin-bottom: 10px;
+}
+
+.service-row-content h2 {
+  font-size: 34px;
+  line-height: 1.15em;
+  margin-bottom: 15px;
+}
+
+.service-row-content h2 a {
+  color: inherit;
+}
+
+.service-row-content p {
+  margin-bottom: 20px;
+}
+
+.service-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 25px;
+}
+
+.service-tags li {
+  font-size: 14px;
+  line-height: 1.3em;
+  color: var(--primary-color);
+  background: var(--secondary-color);
+  border: 1px solid var(--divider-color);
+  border-radius: 100px;
+  padding: 7px 14px;
+}
+
+@media (max-width: 991px) {
+  .service-row,
+  .service-row-reverse {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin-bottom: 60px;
+  }
+
+  .service-row-reverse .service-row-image {
+    order: 0;
+  }
+
+  .service-row-content h2 {
+    font-size: 28px;
+  }
+}
+
+/* -------------------------------------------------------- How we work */
+
+.process-steps {
+  padding: 80px 0;
+}
+
+.process-step-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: none;
+}
+
+.process-step {
+  position: relative;
+  background: var(--white-color);
+  border-radius: 8px;
+  padding: 35px 30px;
+}
+
+/* Arrow between steps on wide screens. */
+.process-step:not(:last-child)::after {
+  content: "\f061";
+  font-family: "Font Awesome 7 Free";
+  font-weight: 900;
+  position: absolute;
+  top: 50%;
+  right: -24px;
+  transform: translateY(-50%);
+  color: var(--accent-color);
+  font-size: 16px;
+}
+
+.process-step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  color: var(--white-color);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.process-step h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.process-step p {
+  margin: 0;
+}
+
+@media (max-width: 991px) {
+  .process-steps {
+    padding: 60px 0;
+  }
+
+  .process-step-list {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .process-step:not(:last-child)::after {
+    content: none;
+  }
+}
+
+/* ---------------------------------------------------------- Contact band */
+
+.contact-band {
+  padding: 100px 0;
+}
+
+.contact-band .section-title {
+  margin-bottom: 30px;
+}
+
+.contact-band-form {
+  background: var(--white-color);
+  border-radius: 8px;
+  padding: 40px;
+  margin-left: 30px;
+}
+
+@media (max-width: 991px) {
+  .contact-band {
+    padding: 60px 0;
+  }
+
+  .contact-band-form {
+    margin: 40px 0 0;
+    padding: 30px 20px;
+  }
+}
+
+/* Phone / Telegram / WhatsApp list (contact band and contact page). */
+.contact-channel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+.contact-channel {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  color: inherit;
+}
+
+.contact-channel-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  color: var(--white-color);
+  font-size: 18px;
+}
+
+.contact-channel-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-channel-label {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+.contact-channel-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.contact-channel:hover .contact-channel-value {
+  color: var(--accent-color);
+}
+
+.contact-channel-hours {
+  margin: 0;
+  font-size: 15px;
+}
+
+.dark-section .contact-channel,
+.dark-section .contact-channel-value,
+.dark-section .contact-channel-hours {
+  color: var(--white-color);
+}
+
+.page-contact-us .contact-channels {
+  margin-top: 10px;
+}
+
+/* ------------------------------------------------------------------ Forms */
+
+.contact-form .form-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--primary-color);
+  margin-bottom: 6px;
+}
+
+.contact-form .form-select {
+  background-position: right 20px center;
+}
+
+.contact-form .form-group {
+  margin-bottom: 20px;
+}
+
+.contact-form .help-block ul {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--error-color);
+}
+
+.contact-form .form-status {
+  margin: 15px 0 0;
+  font-size: 16px;
+  line-height: 1.5em;
+}
+
+/* Honeypot: off-screen for people, still in the form for bots. */
+.form-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------- Category page */
+
+.category-detail-image {
+  margin: 0 0 30px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.category-detail-image img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.category-detail-lead {
+  font-size: 18px;
+  line-height: 1.6em;
+  margin-bottom: 35px;
+}
+
+.category-detail-heading {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.category-detail-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 30px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-detail-list li {
+  position: relative;
+  padding-left: 30px;
+}
+
+.category-detail-list li::before {
+  content: "\f00c";
+  font-family: "Font Awesome 7 Free";
+  font-weight: 900;
+  position: absolute;
+  left: 0;
+  top: 1px;
+  color: var(--accent-color);
+}
+
+.category-detail-aside {
+  position: sticky;
+  top: 30px;
+  background: var(--secondary-color);
+  border-radius: 8px;
+  padding: 30px;
+}
+
+.category-detail-aside h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.category-detail-aside ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-detail-aside a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--divider-color);
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.category-detail-aside a:hover {
+  color: var(--accent-color);
+}
+
+@media (max-width: 991px) {
+  .page-service-single {
+    padding: 60px 0;
+  }
+
+  .category-detail-list {
+    grid-template-columns: 1fr;
+  }
+
+  .category-detail-aside {
+    margin-top: 40px;
+  }
+}
+
+/* ------------------------------------------------------------ About story */
+
+.about-story {
+  padding: 100px 0;
+}
+
+.about-story-text {
+  margin-bottom: 15px;
+}
+
+.about-story-image {
+  margin: 0 0 0 15px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.about-story-image img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.story-timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 30px;
+  list-style: none;
+  padding: 40px 0 0;
+  margin: 60px 0 0;
+  border-top: 2px solid var(--divider-color);
+}
+
+.story-milestone {
+  position: relative;
+}
+
+/* Dot on the timeline line. */
+.story-milestone::before {
+  content: "";
+  position: absolute;
+  top: -48px;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent-color);
+}
+
+.story-milestone-image {
+  margin: 0 0 15px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.story-milestone-image img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.story-milestone-year {
+  display: block;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 6px;
+}
+
+.story-milestone p {
+  margin: 0;
+}
+
+@media (max-width: 991px) {
+  .about-story {
+    padding: 60px 0;
+  }
+
+  .about-story-image {
+    margin: 30px 0 0;
+  }
+}
+
+/* -------------------------------------------- Mission / Vision / Values */
+
+.mission-vision {
+  padding: 100px 0;
+}
+
+.mission-vision-image {
+  margin: 0 30px 0 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mission-vision-image img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.mission-vision-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.mission-vision-item {
+  padding: 25px 0 25px 25px;
+  border-left: 3px solid var(--accent-color);
+}
+
+.mission-vision-item + .mission-vision-item {
+  margin-top: 20px;
+}
+
+.mission-vision-item h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.mission-vision-item p {
+  margin: 0;
+}
+
+.value-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 25px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.value-list li {
+  display: flex;
+  flex-direction: column;
+}
+
+.value-list strong {
+  color: var(--primary-color);
+}
+
+@media (max-width: 991px) {
+  .mission-vision {
+    padding: 60px 0;
+  }
+
+  .mission-vision-image {
+    margin: 0 0 40px;
+  }
+
+  .mission-vision-image img {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (max-width: 575px) {
+  .value-list {
+    grid-template-columns: 1fr;
+  }
+}

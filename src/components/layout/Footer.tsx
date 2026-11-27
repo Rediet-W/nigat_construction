@@ -1,33 +1,21 @@
-import Image from "next/image";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
-import { NewsletterForm } from "@/components/layout/NewsletterForm";
 import { SiteLogo } from "@/components/layout/SiteLogo";
+import { FOOTER_QUICK_LINKS, SOCIAL_LINKS } from "@/constants/navigation";
 import { groupNavigation } from "@/constants/nigat-group";
-import { ROUTES } from "@/constants/routes";
-import {
-  FOOTER_QUICK_LINKS,
-  FOOTER_SERVICE_IDS,
-  SOCIAL_LINKS,
-} from "@/constants/navigation";
-import { SERVICES } from "@/constants/services";
+import { ROUTES, serviceCategoryHref } from "@/constants/routes";
 import { CONTACT_INFO } from "@/constants/site";
-import { localize } from "@/i18n/localize";
+import { localizedCategories } from "@/i18n/localize";
 import { getDictionary, getLocale } from "@/i18n/server";
 
-function FooterLinks({
-  title,
-  links,
-}: {
-  title: string;
-  links: readonly { label: string; href: string }[];
-}) {
+function FooterLinks({ title, links }: { title: string; links: readonly { label: string; href: string }[] }) {
   return (
     <div className="footer-links">
       <h2>{title}</h2>
       <ul>
         {links.map((link) => (
-          <li key={link.label}>
+          <li key={link.href}>
             <Link href={link.href}>{link.label}</Link>
           </li>
         ))}
@@ -36,16 +24,24 @@ function FooterLinks({
   );
 }
 
+function ContactRow({ icon, children }: { icon: string; children: ReactNode }) {
+  return (
+    <li>
+      <i className={`${icon} footer-contact-icon`} aria-hidden="true" />
+      <span>{children}</span>
+    </li>
+  );
+}
+
 export async function Footer() {
   const [t, locale] = await Promise.all([getDictionary(), getLocale()]);
   const group = groupNavigation(locale, ROUTES.home);
-  const quickLinks = FOOTER_QUICK_LINKS.map((link) => ({
-    label: t.nav[link.labelKey],
-    href: link.href,
+  const quickLinks = FOOTER_QUICK_LINKS.map((link) => ({ label: t.nav[link.labelKey], href: link.href }));
+  // The same categories as the Services page, so the two lists always match.
+  const serviceLinks = localizedCategories(t).map((category) => ({
+    label: category.title,
+    href: serviceCategoryHref(category.id),
   }));
-  const serviceLinks = localize(SERVICES, t.content.services)
-    .filter((service) => FOOTER_SERVICE_IDS.includes(service.id))
-    .map((service) => ({ label: service.title, href: service.href }));
 
   return (
     <footer className="main-footer dark-section">
@@ -61,7 +57,7 @@ export async function Footer() {
                   {SOCIAL_LINKS.map((social) => (
                     <li key={social.label}>
                       <a href={social.href} aria-label={social.label}>
-                        <i className={social.icon} />
+                        <i className={social.icon} aria-hidden="true" />
                       </a>
                     </li>
                   ))}
@@ -74,58 +70,26 @@ export async function Footer() {
             <div className="footer-links-box">
               <div className="footer-links footer-contact-box">
                 <ul>
-                  <li>
-                    <Image
-                      src="/images/icon-phone-white.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                    />
-                    <a href={CONTACT_INFO.phone.href}>
-                      {CONTACT_INFO.phone.label}
-                    </a>
-                    /
-                    <a href={CONTACT_INFO.altPhone.href}>
-                      {CONTACT_INFO.altPhone.label}
-                    </a>
-                  </li>
-                  {/* <li>
-                    <Image src="/images/icon-phone-white.svg" alt="" width={24} height={24} />
+                  <ContactRow icon="fa-solid fa-phone">
+                    <a href={CONTACT_INFO.phone.href}>{CONTACT_INFO.phone.label}</a>
+                    {" / "}
                     <a href={CONTACT_INFO.altPhone.href}>{CONTACT_INFO.altPhone.label}</a>
-                  </li> */}
-                  <li>
-                    <Image
-                      src="/images/icon-mail-white.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                    />
-                    <a href={CONTACT_INFO.email.href}>
-                      {CONTACT_INFO.email.label}
-                    </a>
-                  </li>
-                  <li>
-                    <Image
-                      src="/images/icon-location-white.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                    />
-                    {t.common.address}
-                  </li>
-                  <li>
-                    <i
-                      className="fa-regular fa-clock footer-contact-icon"
-                      aria-hidden="true"
-                    />
-                    {t.common.hours}
-                  </li>
+                  </ContactRow>
+                  <ContactRow icon="fa-brands fa-telegram">
+                    <a href={CONTACT_INFO.telegram}>{t.contactBand.telegram}</a>
+                    {" · "}
+                    <a href={CONTACT_INFO.whatsapp}>{t.contactBand.whatsapp}</a>
+                  </ContactRow>
+                  <ContactRow icon="fa-solid fa-envelope">
+                    <a href={CONTACT_INFO.email.href}>{CONTACT_INFO.email.label}</a>
+                  </ContactRow>
+                  <ContactRow icon="fa-solid fa-location-dot">{t.common.address}</ContactRow>
+                  <ContactRow icon="fa-regular fa-clock">{t.common.hours}</ContactRow>
                 </ul>
               </div>
 
               <FooterLinks title={t.footer.quickLinks} links={quickLinks} />
               <FooterLinks title={t.footer.ourServices} links={serviceLinks} />
-              <NewsletterForm />
             </div>
           </div>
 
@@ -137,31 +101,23 @@ export async function Footer() {
               </div>
               <ul className="footer-group-list" aria-label={t.group.sectors}>
                 {group.sectors.map((sector) => (
-                  <li
-                    key={sector.key}
-                    className={sector.current ? "is-current" : undefined}
-                  >
+                  <li key={sector.key} className={sector.current ? "is-current" : undefined}>
                     <span className="footer-group-no">{sector.number}</span>
                     <h3>
-                      <Link
-                        href={sector.href}
-                        aria-current={sector.current ? "page" : undefined}
-                      >
-                        {sector.name}
-                        {!sector.current && (
-                          <i
-                            className="fa-solid fa-arrow-up-right-from-square"
-                            aria-hidden="true"
-                          />
-                        )}
-                      </Link>
+                      {sector.current ? (
+                        <Link href={sector.href} aria-current="page">
+                          {sector.name}
+                        </Link>
+                      ) : (
+                        // A plain link: another website, same tab.
+                        <a href={sector.href}>
+                          {sector.name}
+                          <i className="fa-solid fa-arrow-right" aria-hidden="true" />
+                        </a>
+                      )}
                     </h3>
                     <p>{sector.description}</p>
-                    {sector.current && (
-                      <span className="footer-group-here">
-                        {t.group.youAreHere}
-                      </span>
-                    )}
+                    {sector.current && <span className="footer-group-here">{t.group.youAreHere}</span>}
                   </li>
                 ))}
               </ul>

@@ -28,7 +28,7 @@ export async function Header() {
                 <GroupSwitcher />
                 <div className="header-btn">
                   <Link href={ROUTES.contact} className="btn-default btn-highlighted">
-                    {t.common.bookNow}
+                    {t.common.getQuote}
                   </Link>
                 </div>
               </div>

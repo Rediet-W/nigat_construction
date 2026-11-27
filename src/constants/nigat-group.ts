@@ -1,6 +1,10 @@
 /**
  * Nigat Group — the parent company and its three sector websites.
  * Used by the header "Nigat Group" switcher, the mobile menu and the footer band.
+ *
+ * Keep names, descriptions and order identical on all three Nigat websites
+ * (this file mirrors src/constants/nigat-group.ts in Nigat_Motors and Nigat_Exports).
+ * Sister sites open in the same tab, so the browser Back button returns here.
  */
 
 import type { Locale } from "@/i18n/config";
@@ -14,11 +18,9 @@ import type { Locale } from "@/i18n/config";
  * │ (NEXT_PUBLIC_ vars are baked in at build time, so rebuild after changing.) │
  * └──────────────────────────────────────────────────────────────────────────┘
  */
-export const SECTOR_URLS = {
+const SECTOR_URLS = {
   construction: "https://nigat-construction.vercel.app/",
-  /** PLACEHOLDER */
   motors: "https://nigat-motors.vercel.app/",
-  /** PLACEHOLDER */
   exports: "https://nigat-exports.vercel.app/",
 } as const;
 
@@ -27,12 +29,12 @@ export type SectorKey = keyof typeof SECTOR_URLS;
 /** The sector this website belongs to. */
 export const CURRENT_SECTOR: SectorKey = "construction";
 
-export const GROUP = {
+const GROUP = {
   name: "Nigat Group",
   nameAm: "ንጋት ግሩፕ",
 } as const;
 
-export interface Sector {
+interface Sector {
   key: SectorKey;
   name: string;
   nameAm: string;
@@ -41,21 +43,21 @@ export interface Sector {
   href: string;
 }
 
-export const SECTORS: readonly Sector[] = [
+const SECTORS: readonly Sector[] = [
   {
     key: "construction",
-    name: "Nigat Construction",
-    nameAm: "ንጋት ኮንስትራክሽን",
+    name: "Nigat Fanawi Construction",
+    nameAm: "ንጋት ፋናዊ ኮንስትራክሽን",
     description: "Building and construction projects.",
     descriptionAm: "የሕንፃ እና የኮንስትራክሽን ፕሮጀክቶች።",
     href: process.env.NEXT_PUBLIC_CONSTRUCTION_URL || SECTOR_URLS.construction,
   },
   {
     key: "motors",
-    name: "Nigat Motors",
-    nameAm: "ንጋት ሞተርስ",
-    description: "Electric & hybrid vehicles and after-sales support.",
-    descriptionAm: "የኤሌክትሪክ እና ሃይብሪድ ተሽከርካሪዎች እና ከሽያጭ በኋላ ድጋፍ።",
+    name: "NF Car Importer",
+    nameAm: "ኤንኤፍ የመኪና አስመጪ",
+    description: "Vehicle importing and sales, electric vehicles, accessories and spare parts.",
+    descriptionAm: "የተሽከርካሪ ማስመጣት እና ሽያጭ፣ የኤሌክትሪክ ተሽከርካሪዎች፣ ተጨማሪ ዕቃዎች እና መለዋወጫዎች።",
     href: process.env.NEXT_PUBLIC_MOTORS_URL || SECTOR_URLS.motors,
   },
   {

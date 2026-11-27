@@ -8,7 +8,6 @@ import { groupNavigation } from "@/constants/nigat-group";
 import { ROUTES } from "@/constants/routes";
 import { useCollapse } from "@/hooks/useCollapse";
 import { useI18n } from "@/i18n/I18nProvider";
-import type { NavItem } from "@/types";
 
 /*
  * React replacement for jQuery SlickNav. The toggle button lives in
@@ -98,40 +97,6 @@ function SlideList({ open, className, children }: { open: boolean; className?: s
   );
 }
 
-function ParentItem({ item, onNavigate }: { item: NavItem; onNavigate: () => void }) {
-  const [open, setOpen] = useState(false);
-  const { dict } = useI18n();
-  const toggle = () => setOpen((o) => !o);
-  return (
-    <li className={`nav-item submenu slicknav_parent ${open ? "slicknav_open" : "slicknav_collapsed"}`}>
-      <a
-        href="#"
-        role="menuitem"
-        aria-haspopup="true"
-        aria-expanded={open}
-        tabIndex={0}
-        className="slicknav_item slicknav_row"
-        onClick={(event) => {
-          event.preventDefault();
-          toggle();
-        }}
-      >
-        <span className="nav-link slicknav_parent-label">{dict.nav[item.labelKey]}</span>
-        <span className="slicknav_arrow">{open ? "▼" : "►"}</span>
-      </a>
-      <SlideList open={open}>
-        {item.children?.map((child) => (
-          <li key={child.labelKey} className="nav-item">
-            <Link className="nav-link" href={child.href} role="menuitem" onClick={onNavigate}>
-              {dict.nav[child.labelKey]}
-            </Link>
-          </li>
-        ))}
-      </SlideList>
-    </li>
-  );
-}
-
 /** "Nigat Group" row: the three sector sites, the current one highlighted. */
 function GroupRow({ onNavigate }: { onNavigate: () => void }) {
   const { locale, dict } = useI18n();
@@ -140,19 +105,26 @@ function GroupRow({ onNavigate }: { onNavigate: () => void }) {
     <li className="nav-item mobile-group" role="none">
       <span className="mobile-group-title">{groupName}</span>
       <div className="mobile-group-links" role="group" aria-label={dict.group.sectors}>
-        {sectors.map((sector) => (
-          <Link
-            key={sector.key}
-            href={sector.href}
-            role="menuitem"
-            className={sector.current ? "is-current" : undefined}
-            aria-current={sector.current ? "page" : undefined}
-            onClick={onNavigate}
-          >
-            {sector.name}
-            {!sector.current && <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" />}
-          </Link>
-        ))}
+        {sectors.map((sector) =>
+          sector.current ? (
+            <Link
+              key={sector.key}
+              href={sector.href}
+              role="menuitem"
+              className="is-current"
+              aria-current="page"
+              onClick={onNavigate}
+            >
+              {sector.name}
+            </Link>
+          ) : (
+            // A plain link: another website, same tab (the Back button returns here).
+            <a key={sector.key} href={sector.href} role="menuitem">
+              {sector.name}
+              <i className="fa-solid fa-arrow-right" aria-hidden="true" />
+            </a>
+          ),
+        )}
       </div>
     </li>
   );
@@ -164,17 +136,13 @@ export function MobileMenu() {
   return (
     <div className="slicknav_menu">
       <SlideList open={open} className="slicknav_nav">
-        {MAIN_NAVIGATION.map((item) =>
-          item.children ? (
-            <ParentItem key={item.labelKey} item={item} onNavigate={close} />
-          ) : (
-            <li key={item.labelKey} className="nav-item">
-              <Link className="nav-link" href={item.href} role="menuitem" onClick={close}>
-                {dict.nav[item.labelKey]}
-              </Link>
-            </li>
-          ),
-        )}
+        {MAIN_NAVIGATION.map((item) => (
+          <li key={item.labelKey} className="nav-item">
+            <Link className="nav-link" href={item.href} role="menuitem" onClick={close}>
+              {dict.nav[item.labelKey]}
+            </Link>
+          </li>
+        ))}
         <GroupRow onNavigate={close} />
       </SlideList>
     </div>

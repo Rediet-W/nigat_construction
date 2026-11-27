@@ -1,27 +1,32 @@
+import type { Stat } from "@/types";
+
 export const SITE = {
   name: "Nigat Fanawi Construction",
   legalName: "Nigat Fanawi Trading PLC",
-  industry: "Construction",
-  established: 2018,
-  defaultTitle: "Nigat Fanawi Construction",
-  description:
-    "Our experienced team transforms ideas into exceptional residential and commercial developments using premium materials, innovative engineering.",
-  mission:
-    "To deliver reliable, innovative, and sustainable trading, construction, and investment solutions by creating value for customers, partners, and stakeholders through operational excellence, integrity, and customer-centric services.",
-  objectives: ["Trust and credibility", "Lead generation", "Competitive edge"],
+  /** Used for absolute URLs in metadata; override with NEXT_PUBLIC_SITE_URL. */
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://nigat-construction.vercel.app",
   logo: "/images/logo.png",
-  copyright: "Copyright © 2026 Nigat Fanawi Trading PLC. All Rights Reserved.",
 } as const;
 
+/**
+ * CONFIRM WITH NIGAT: phone numbers, email, address and hours.
+ * The email is a Gmail address; switch to a company-domain address when one exists.
+ */
 export const CONTACT_INFO = {
-  phone: { label: "0995888882", href: "tel:+251995888882" },
-  altPhone: { label: "0995888883", href: "tel:+251995888883" },
+  phone: { label: "0995 888 882", href: "tel:+251995888882" },
+  altPhone: { label: "0995 888 883", href: "tel:+251995888883" },
   email: { label: "nigatfanawi33@gmail.com", href: "mailto:nigatfanawi33@gmail.com" },
-  address: "Addis Ababa",
+  /** Opens a Telegram chat with the main phone number. Replace with t.me/<username> once confirmed. */
+  telegram: "https://t.me/+251995888882",
+  whatsapp: "https://wa.me/251995888882",
 } as const;
 
-/** Promo video opened by every "play" button in the template. */
-export const PROMO_VIDEO_URL = "https://www.youtube.com/watch?v=Y-x0efG1seA";
+/**
+ * Figures shown on the home page. Leave empty until Nigat has confirmed each
+ * number; the stats row is hidden while this list is empty.
+ * Example: { value: "2018", label: { en: "Founded in Addis Ababa", am: "በአዲስ አበባ የተመሠረተበት" } }
+ */
+export const VERIFIED_STATS: readonly Stat[] = [];
 
 /**
  * Office pin on the Contact page map — edit these to move it.
